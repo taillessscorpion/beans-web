@@ -1,0 +1,209 @@
+@import "../declaration.scss";
+
+body {
+    $Header-Height: $Size-7;
+    & > header[data-device="mobile"] {
+        z-index: 100;
+        height: $Header-Height;
+        position: fixed;
+        top: 0;
+        @include d-flex--col--cen;
+        transition: all 0.3s ease-in-out;
+        &:has(.Fade) {
+            backdrop-filter: blur($Size-1);
+        }
+        & > .Container {
+            transition: all 0.3s ease-in-out;
+            background-color: primary-color();
+            height: 100%;
+            max-width: 100vw;
+            @include d-flex--row--s-bet;
+            @include horizontal-padding($Spacing-3);
+            color: tertiary-color();
+            transition:
+                background 1s ease-in-out 0.5s,
+                translate 0.5s ease-in-out 0.2s;
+            &.Mini {
+                translate: 0% -100%;
+                transition: translate 0.2s ease-out;
+                & > .Logo {
+                    translate: 0% $Header-Height;
+                }
+                & > .Cart {
+                    translate: 0% $Header-Height;
+                    background-color: primary-color();
+                    @include border-bot-radius(40%);
+                }
+            }
+            &.Fade {
+                background-color: primary-counter-color(0.1);
+            }
+            &:has(> .Active) {
+                background-color: primary-counter-color();
+                &.Mini {
+                    translate: 0%;
+                    & > .Logo {
+                        translate: 0%;
+                    }
+                }
+            }
+            &:has(> .Navigation.Active) {
+                & > .Cart {
+                    display: none;
+                }
+            }
+            & > .Navigation {
+                width: $Header-Height;
+                height: 100%;
+                @include d-flex--row--cen;
+                position: relative;
+                transition: all 0.4s ease-in-out;
+                & > div {
+                    width: calc(100% - #{$Spacing-2 * 1.5});
+                    height: $Size-2;
+                    background-color: currentColor;
+                    border-radius: $Size-2;
+                    position: absolute;
+                    transition:
+                        height 0.2s ease-in-out,
+                        color 0.2s ease-in-out 0.1s;
+                    &::before {
+                        content: "";
+                        @include position-top;
+                        margin-top: $Spacing-1 * 1.5;
+                        width: 100%;
+                        height: $Size-2;
+                        background-color: currentColor;
+                        border-radius: $Size-2;
+                        transform-origin: bottom left;
+
+                        transition:
+                            width 0.2s ease-in-out,
+                            color 0.2s ease-out 0.1s,
+                            transform 0.3s ease-in-out 0.1s;
+                    }
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        @include position-bot;
+                        margin-bottom: $Spacing-1 * 1.3;
+                        width: 100%;
+                        height: $Size-2;
+                        background-color: currentColor;
+                        border-radius: $Size-2;
+                        transform-origin: top left;
+                        transition:
+                            width 0.2s ease-in-out,
+                            color 0.2s ease-out 0.1s,
+                            transform 0.3s ease-in-out 0.1s;
+                    }
+                }
+                &.Active {
+                    background-color: primary-color();
+                    @include border-bot-radius(40%);
+                    color: secondary-color();
+                    & > div {
+                        &::before {
+                            transform: rotate(-30deg);
+                            width: 65%;
+                            margin-top: 0px;
+                            transition:
+                                all 0.2s ease-in-out,
+                                width 0.2s ease-in-out 0.1s,
+                                color 0.3s ease-out,
+                                transform 0.2s ease-in-out;
+                        }
+                        &::after {
+                            transform: rotate(30deg);
+                            width: 65%;
+                            margin-bottom: 0px;
+                            transition:
+                                all 0.2s ease-in-out,
+                                width 0.2s ease-in-out 0.1s,
+                                color 0.3s ease-out,
+                                transform 0.2s ease-in-out;
+                        }
+                    }
+                }
+            }
+            & > .Logo {
+                width: $Size-9;
+                @include position-top;
+                left: calc(50% - #{$Size-9 / 2});
+                padding-top: $Spacing-2;
+                @include horizontal-padding($Spacing-1);
+                background-color: primary-color();
+                @include border-bot-radius(50%);
+                & > a {
+                    height: $Size-9;
+                    @include size-inherit;
+                    & > img {
+                        @include size-inherit;
+                    }
+                }
+            }
+            & > .Cart {
+                width: $Header-Height;
+                height: 100%;
+                @include d-flex--col--cen;
+                font-size: 1.4rem;
+            }
+        }
+    }
+    & > .Menu {
+        display: none;
+        &.Active {
+            z-index: 99;
+            @include d-flex--col--cen;
+
+        }
+        position: fixed;
+        width: 100vw;
+        height: calc(100vh - $Header-Height);
+        top: $Header-Height;
+        z-index: 0;
+        padding-bottom: 10vw;
+        gap: $Spacing-3;
+        background-color: primary-counter-color();
+        @include d-flex--row--f-str;
+        & > a {
+            color: tertiary-color();
+            transition: all 0.4s ease-out 0.5s;
+            text-decoration: none;
+            border-bottom: 0.1em dotted currentColor;
+            &:not(:has(img)) {
+                @include d-flex--col--cen;
+                font-weight: bolder;
+            }
+            & > img {
+                aspect-ratio: 1;
+                object-fit: contain;
+                width: auto;
+                height: 180%;
+                background-color: primary-color();
+                padding: $Spacing-2;
+                @include border-bot-radius(50%);
+                transition:
+                    all 0.5s ease-in 0.5s,
+                    translate 0.3s ease-out 0.2s;
+                
+            }
+        }
+    }
+    @media (max-width: $Narrow-Screen-Width) {
+        $Header-Height: $Size-6 + $Size-4;
+        & > header[data-device="mobile"] {
+            &>.Container {
+                &>.Logo {
+                    width: $Size-8 + $Size-4;
+                @include position-top;
+                left: calc(50% - #{($Size-8 + $Size-4) / 2});
+                }
+            }
+            
+        }
+        & > .Menu {
+            font-size: 3vw;
+        }
+    }
+}

@@ -1,0 +1,4648 @@
+@import "./declaration.scss";
+
+// clearfix
+* {
+  border: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: quaternary-color();
+  padding-bottom: $Size-7;
+  &:has(.Loading-Screen),
+  &:has(.Menu.Active) {
+    overflow-y: hidden;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: quaternary-color();
+  }
+  &::-webkit-scrollbar-track {
+    background-color: primary-counter-color();
+  }
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 100vh;
+    @include position-right;
+  }
+
+  & > :nth-child(n) {
+    width: 100%;
+    & > .Container {
+      width: 100%;
+      max-width: $Max-Screen-Container;
+    }
+  }
+  & > .Home {
+    @include d-flex--col--cen;
+    background-color: primary-counter-color();
+    position: sticky;
+    z-index: 1;
+    padding-bottom: $Spacing-3;
+    min-height: 100vh;
+    & > a {
+      margin-top: $Spacing-5;
+      margin-bottom: $Spacing-1;
+      padding-bottom: $Spacing-1;
+      text-align: left;
+      width: 100%;
+      max-width: $Max-Screen-Container;
+      text-decoration: none;
+      border-bottom: $Size-1 dotted currentColor;
+      color: inherit;
+      @include d-flex--row--f-str;
+      font-size: 1.5rem;
+      gap: $Spacing-2;
+      & > h1 {
+        font-size: 1.6rem;
+      }
+    }
+    & > .Introduction {
+      width: 100%;
+      height: $Size-13;
+      @include d-flex--row--f-str;
+      position: relative;
+      overflow: hidden;
+      & > .Screen {
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        top: 100%;
+        left: 100%;
+        &.Active {
+          transition: $Max-Screen-Intro-Transition ease-in-out;
+          &:first-child {
+            & ~ :last-child {
+              transition: $Max-Screen-Intro-Transition ease-in-out;
+            }
+          }
+        }
+        &:has(+ .Active),
+        &:first-child:has(:last-child.Active) {
+          transition: $Max-Screen-Intro-Transition ease-in-out;
+        }
+
+        & > .Container {
+          @include size-inherit;
+          @include d-flex--col--cen;
+          position: relative;
+          & > .Hands {
+            @include size-inherit;
+            @include position-top;
+            max-width: $Max-Screen-Container;
+            & > img {
+              height: calc(100% - #{$Size-10} - 4.5em);
+              object-fit: contain;
+            }
+          }
+          & > .Background {
+            @include size-inherit;
+            @include d-flex--col--cen;
+            & > div {
+              @include size-inherit;
+              & > img {
+                @include size-inherit;
+                object-fit: cover;
+              }
+            }
+          }
+          & > .Wrapper {
+            @include size-inherit;
+            @include position-top;
+            overflow: hidden;
+            @include d-flex--col--f-end;
+            & > .Container {
+              width: 100%;
+              max-width: $Max-Screen-Container;
+              margin-bottom: $Size-9 + $Size-7;
+              @include d-flex--row--f-str;
+              position: relative;
+              & > h1 {
+                color: secondary-color();
+                background-color: primary-color();
+                font-size: 4.5em;
+                line-height: 1.5em;
+                @include position-out-top;
+                transition:
+                  translate 0.25 * $Max-Screen-Intro-Transition ease-in 0.65 * $Max-Screen-Intro-Transition,
+                  color 0.5 * $Max-Screen-Intro-Transition ease-in-out 0.5 * $Max-Screen-Intro-Transition;
+
+                &::before {
+                  content: "";
+                  width: calc((100vw - $Max-Screen-Container) / 2);
+                  height: 100%;
+                  background-color: inherit;
+                }
+              }
+              & > div {
+                @include position-out-bot;
+                & > div {
+                  @include d-flex--row--f-str;
+                  position: relative;
+                  width: fit-content;
+                  & > div {
+                    top: 0;
+                    width: calc(100% + (100vw - $Max-Screen-Container) / 2);
+                    backdrop-filter: blur($Size-3) brightness(120%);
+                    height: 100%;
+                    background-color: primary-color(0.4);
+                  }
+                  & > h3 {
+                    z-index: 1;
+                    color: primary-counter-color();
+                    font-size: 3em;
+                    width: max-content;
+                    line-height: 1.5em;
+                    transition: color 0.25 * $Max-Screen-Intro-Transition ease-out 0.75 * $Max-Screen-Intro-Transition;
+                    &::before {
+                      content: "";
+                      height: 100%;
+                      width: $Spacing-4;
+                      background-color: currentColor;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(2n-1) {
+          & > .Container {
+            & > .Wrapper {
+              & > .Container {
+                & > h1 {
+                  padding-left: $Spacing-3;
+                  padding-right: $Spacing-5;
+                  @include border-right-radius($Size-3);
+                  &::before {
+                    @include position-out-left;
+                  }
+                }
+                & > div {
+                  & > div {
+                    & > div {
+                      @include position-right;
+                    }
+                    & > h3 {
+                      padding-left: $Spacing-3;
+                      padding-right: $Spacing-4;
+                      &::before {
+                        @include position-out-right;
+                        @include border-right-radius($Size-3);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(2n) {
+          & > .Container {
+            & > .Wrapper {
+              & > .Container {
+                z-index: 2;
+                justify-content: flex-end;
+                & > h1 {
+                  text-align: center;
+                  padding-right: $Spacing-4;
+                  padding-left: $Spacing-5;
+                  @include border-left-radius($Size-3);
+                  &::before {
+                    @include position-out-right;
+                  }
+                }
+                & > div {
+                  & > div {
+                    & > div {
+                      @include position-left;
+                    }
+                    & > h3 {
+                      @include horizontal-padding($Spacing-4);
+                      &::before {
+                        @include position-out-left;
+                        @include border-left-radius($Size-3);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(1) {
+          // 1 active ////////////////////////////////////////////////////////////////////////////////////////////
+          &.Active {
+            top: 0%;
+            left: 0%;
+            & > .Container {
+              & > .Hands {
+                & > img {
+                  transition:
+                    opacity 0.15 * $Max-Screen-Intro-Transition ease-out 0.75 * $Max-Screen-Intro-Transition,
+                    translate 0.3 * $Max-Screen-Intro-Transition ease-out 0.6 * $Max-Screen-Intro-Transition;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  & > img {
+                    transition:
+                      all 0.5 * $Max-Screen-Intro-Transition ease-out 0.25 * $Max-Screen-Intro-Transition,
+                      scale 0.25 * $Max-Screen-Intro-Transition ease-in;
+                    object-position: top left;
+                  }
+                }
+                & > :last-child {
+                  & > img {
+                    opacity: 1;
+                    object-position: center;
+                    transition:
+                      all 0.4 * $Max-Screen-Intro-Transition ease-out 0.6 * $Max-Screen-Intro-Transition,
+                      opacity 0.5 * $Max-Screen-Intro-Transition ease-out 0.75 * $Max-Screen-Intro-Transition;
+                  }
+                }
+              }
+              & > .Wrapper {
+                z-index: 8;
+              }
+            }
+            /// 2 in ////////////////////////////////////////////////////////////////////////////////////////////
+            & + .Screen {
+              /// 1 active set 2
+              left: -100%;
+              top: 0;
+              & > .Container {
+                & > .Hands {
+                  & > img {
+                    opacity: 0;
+                  }
+                }
+                & > .Background {
+                  & > :first-child {
+                    overflow: hidden;
+                    & > img {
+                      scale: 2;
+                    }
+                  }
+                  & > :last-child {
+                    & > img {
+                      opacity: 0;
+                      scale: 1.5;
+                      translate: 50% -50%;
+                      object-position: top right;
+                    }
+                  }
+                }
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((100vw - #{$Max-Screen-Container}) / 2);
+                      color: primary-counter-color();
+                    }
+                    & > div > div > h3 {
+                      color: tertiary-color();
+                    }
+                  }
+                }
+              }
+            }
+            /// 4 out ////////////////////////////////////////////////////////////////////////////////////////////
+            & ~ :last-child {
+              /// 1 active set 4
+              top: 0%;
+              left: -100%;
+              z-index: 5;
+              & > .Container {
+                & > .Background {
+                  & > :first-child {
+                    overflow: hidden;
+                    & > img {
+                      object-position: center left;
+                      scale: 1.2;
+                      translate: 10%;
+                      opacity: 0;
+                      transition:
+                        all 1.2 * $Max-Screen-Intro-Transition ease-in-out,
+                        translate 0.8 * $Max-Screen-Intro-Transition ease-in-out 0.45 * $Max-Screen-Intro-Transition,
+                        opacity 0.3 * $Max-Screen-Intro-Transition ease-in 0.95 * $Max-Screen-Intro-Transition;
+                    }
+                  }
+                }
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((100vw - #{$Max-Screen-Container}) / 2);
+                      color: primary-counter-color();
+                      transition: all 0.5 * $Max-Screen-Intro-Transition ease-in-out;
+                    }
+                    & > div > h3 {
+                      color: tertiary-color();
+                    }
+                  }
+                }
+                & > .Object {
+                  translate: 100vw 100%;
+                  opacity: 1;
+                  rotate: -15deg;
+                  right: -$Size-12 - $Size-11;
+
+                  transition:
+                    all 0.3 * $Max-Screen-Intro-Transition ease-in-out 0.3 * $Max-Screen-Intro-Transition,
+                    rotate 0.3 * $Max-Screen-Intro-Transition ease-in-out 0.5 * $Max-Screen-Intro-Transition,
+                    translate 0.5 * $Max-Screen-Intro-Transition ease-in-out 0.55 * $Max-Screen-Intro-Transition;
+                  & > :nth-child(4) {
+                    // cf
+                    opacity: 1;
+                    translate: 0%;
+                    transition:
+                      translate 0.2 * $Max-Screen-Intro-Transition ease-in 0.2 * $Max-Screen-Intro-Transition,
+                      opacity 0.1 * $Max-Screen-Intro-Transition ease-out 0.2 * $Max-Screen-Intro-Transition;
+                  }
+                  & > :nth-child(3) {
+                    // tuoi
+                    opacity: 1;
+                    translate: 0%;
+                    transition:
+                      translate 0.2 * $Max-Screen-Intro-Transition ease-in 0.05 * $Max-Screen-Intro-Transition,
+                      opacity 0.1 * $Max-Screen-Intro-Transition ease-out 0.05 * $Max-Screen-Intro-Transition;
+                  }
+                  & > :nth-child(5) {
+                    // dac
+                    opacity: 1;
+                    translate: 0%;
+                    transition:
+                      translate 0.2 * $Max-Screen-Intro-Transition ease-in 0.1 * $Max-Screen-Intro-Transition,
+                      opacity 0.1 * $Max-Screen-Intro-Transition ease-out 0.1 * $Max-Screen-Intro-Transition;
+                  }
+                  & > :nth-child(2) {
+                    // da
+                    opacity: 1;
+                    translate: 0%;
+                    transition:
+                      translate 0.2 * $Max-Screen-Intro-Transition ease-in,
+                      opacity 0.1 * $Max-Screen-Intro-Transition ease-out;
+                  }
+                }
+              }
+            }
+          }
+          /// 1 in ////////////////////////////////////////////////////////////////////////////////////////////
+          &:has(~ :last-child.Active) {
+            top: 0%;
+            left: 100%;
+            & > .Container {
+              & > .Hands {
+                & > img {
+                  translate: -150%;
+                  opacity: 0;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  & > img {
+                    object-position: bottom;
+                    translate: -20%;
+                    scale: 2;
+                  }
+                }
+                & > :last-child {
+                  & > img {
+                    opacity: 0;
+                    object-position: top;
+                    scale: 2;
+                  }
+                }
+              }
+              & > .Wrapper {
+                & > .Container {
+                  & > h1 {
+                    color: primary-counter-color();
+                    translate: calc((#{$Max-Screen-Container} - 100vw) / 2);
+                  }
+                  & > div > div > h3 {
+                    color: tertiary-color();
+                  }
+                }
+              }
+            }
+          }
+          ///  1 out ////////////////////////////////////////////////////////////////////////////////////////////
+          &:has(+ .Active) {
+            top: 0%;
+            left: 100%;
+            z-index: 5;
+            & > .Container {
+              & > .Hands {
+                & > img {
+                  opacity: 0;
+                  transition: opacity 0s 0.15 * $Max-Screen-Intro-Transition;
+                  animation: hand-flip-out 0.15 * $Max-Screen-Intro-Transition ease-in 0 * $Max-Screen-Intro-Transition;
+                }
+              }
+              & > .Background {
+                justify-content: flex-end;
+                & > :first-child {
+                  & > img {
+                    object-position: bottom right;
+                    transition:
+                      all 0.5 * $Max-Screen-Intro-Transition ease-in-out,
+                      translate 0.75 * $Max-Screen-Intro-Transition ease-in 0.4 * $Max-Screen-Intro-Transition;
+                    scale: 1.5;
+                    translate: 0% 30%;
+                  }
+                }
+                & > :last-child {
+                  & > img {
+                    object-position: top;
+                    opacity: 0;
+                    scale: 2;
+                    transition:
+                      all 0.5 * $Max-Screen-Intro-Transition ease-out,
+                      opacity 0.3 * $Max-Screen-Intro-Transition ease-out 0.1 * $Max-Screen-Intro-Transition,
+                      scale 0.4 * $Max-Screen-Intro-Transition ease-in;
+                  }
+                }
+              }
+              & > .Wrapper {
+                & > .Container {
+                  & > h1 {
+                    color: primary-counter-color();
+                    translate: calc((#{$Max-Screen-Container} - 100vw) / 2);
+                    transition: all 0.5 * $Max-Screen-Intro-Transition ease-in-out;
+                  }
+                }
+              }
+            }
+          }
+          /// 1 general //////////////////////////////////////////////
+          & > .Container {
+            & > .Hands {
+              padding-left: $Size-10;
+            }
+            & > .Background {
+              justify-content: flex-end;
+              & > :first-child {
+                overflow: hidden;
+              }
+              & > :last-child {
+                @include position-top;
+                clip-path: ellipse(calc(200% - #{$Size-10}) 900% at 0% calc(-800% - #{$Size-10}));
+                background-color: primary-counter-color();
+                @include d-flex--col--f-str;
+                align-items: flex-start;
+                & > img {
+                  height: calc(100% - #{$Size-10});
+                  width: calc(100% - #{$Size-10});
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(2) {
+          /// 2 active
+          &.Active {
+            top: 0%;
+            left: 0%;
+            & > .Container {
+              & > .Hands {
+                z-index: 7;
+                & > :first-child {
+                  opacity: 0;
+                  animation: hand-scale-in 0.4 * $Max-Screen-Intro-Transition ease-out 0.6 *
+                    $Max-Screen-Intro-Transition;
+                }
+                & > :last-child {
+                  transition: opacity 0.07 * $Max-Screen-Intro-Transition ease-in 0.93 * $Max-Screen-Intro-Transition;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  background-color: primary-counter-color();
+                  & > img {
+                    transition: all 0.75 * $Max-Screen-Intro-Transition ease-in-out 0.25 * $Max-Screen-Intro-Transition;
+                    object-position: bottom right;
+                  }
+                }
+                & > :last-child {
+                  overflow: visible;
+                  & > img {
+                    transition:
+                      all 0.3 * $Max-Screen-Intro-Transition ease-out 0.75 * $Max-Screen-Intro-Transition,
+                      opacity 0.2 * $Max-Screen-Intro-Transition ease-out 0.9 * $Max-Screen-Intro-Transition,
+                      scale 0.4 * $Max-Screen-Intro-Transition ease-in 0.85 * $Max-Screen-Intro-Transition;
+                  }
+                }
+              }
+              & > .Wrapper {
+                z-index: 6;
+              }
+            }
+          }
+          /// 3 in ////////////////////////////////////////////////////////////////////////////////////////////
+          &.Active + .Screen {
+            top: 0%;
+            left: 100%;
+            & > .Container {
+              & > .Hands {
+                & > :first-child {
+                  opacity: 0;
+                }
+                & > :last-child {
+                  opacity: 0;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  & > img {
+                    translate: -30%;
+                    opacity: 0;
+                  }
+                }
+                & > :last-child {
+                  @include position-left;
+                  & > img {
+                    translate: -10% -80%;
+                    opacity: 0;
+                  }
+                }
+              }
+              & > .Wrapper {
+                & > .Container {
+                  & > h1 {
+                    translate: calc((#{$Max-Screen-Container} - 100vw) / 2);
+                    color: primary-counter-color();
+                  }
+                  & > div > div > h3 {
+                    color: tertiary-color();
+                  }
+                }
+              }
+            }
+          }
+          /// 2 out ////////////////////////////////////////////////////////////////////////////////////////////
+          &:has(+ .Active) {
+            left: -100%;
+            top: 0;
+            z-index: 5;
+            & > .Container {
+              & > .Hands {
+                z-index: 8;
+                & > :first-child {
+                  opacity: 0;
+                }
+                & > :last-child {
+                  opacity: 0;
+                  transition: opacity 0s 0.15 * $Max-Screen-Intro-Transition;
+                  animation: hand-flip-out 0.2 * $Max-Screen-Intro-Transition ease-in;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  overflow: hidden;
+                  & > img {
+                    transition:
+                      all 0.5 * $Max-Screen-Intro-Transition ease-in-out 0.15 * $Max-Screen-Intro-Transition,
+                      opacity 0.1 * $Max-Screen-Intro-Transition ease-in 0.55 * $Max-Screen-Intro-Transition;
+                    opacity: 0;
+                    translate: 10%;
+                  }
+                }
+                & > :last-child {
+                  background-color: transparent;
+                  translate: 20%;
+
+                  transition:
+                    all 0.15 * $Max-Screen-Intro-Transition ease 0.75 * $Max-Screen-Intro-Transition,
+                    translate 0.25 * $Max-Screen-Intro-Transition ease-in-out 0.4 * $Max-Screen-Intro-Transition;
+                  z-index: 7;
+                  & > img {
+                    transition:
+                      all 0.7 * $Max-Screen-Intro-Transition ease-in-out,
+                      opacity 0.2 * $Max-Screen-Intro-Transition ease-out 0.5 * $Max-Screen-Intro-Transition;
+                    translate: 35% -50%;
+                    opacity: 0;
+                    scale: 1.5;
+                  }
+                }
+              }
+              & > .Wrapper {
+                z-index: 9;
+                & > .Container {
+                  & > h1 {
+                    translate: calc((100vw - #{$Max-Screen-Container}) / 2);
+                    color: primary-counter-color();
+                    transition: all 0.5 * $Max-Screen-Intro-Transition ease-in-out;
+                  }
+                }
+              }
+            }
+          }
+          // 2 general ////////////////////////////////////////////////////////////////////////////////////////////
+          & > .Container {
+            & > .Hands {
+              @include d-flex--row--f-end;
+              align-items: flex-start;
+              padding-right: $Size-10;
+
+              & > img {
+                z-index: 3;
+                &:last-child {
+                  z-index: 4;
+                  @include position-top;
+                }
+              }
+            }
+            & > .Background {
+              @include d-flex--row--cen;
+              & > :first-child {
+                @include position-left;
+                & > img {
+                  object-position: bottom right;
+                }
+              }
+              & > :last-child {
+                clip-path: ellipse(calc(200% - #{$Size-10}) 900% at 100% calc(-800% - #{$Size-10}));
+                background-color: primary-counter-color();
+                & > img {
+                  object-position: center left;
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(3) {
+          /// 3 active
+          &.Active {
+            top: 0%;
+            left: 0%;
+            & > .Container {
+              & > .Hands {
+                z-index: 6;
+                & > :first-child {
+                  opacity: 0;
+                  animation:
+                    hand-scale-in 0.3 * $Max-Screen-Intro-Transition ease-out 0.7 * $Max-Screen-Intro-Transition,
+                    hand-turn-out 0.2 * $Max-Screen-Intro-Transition ease-in-out 0.95 * $Max-Screen-Intro-Transition;
+                }
+                & > :last-child {
+                  opacity: 1;
+                  transition: all 0s ease 1.1 * $Max-Screen-Intro-Transition;
+                  animation: hand-turn-in 0.2 * $Max-Screen-Intro-Transition ease-in-out 1.1 *
+                    $Max-Screen-Intro-Transition;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  background-color: primary-counter-color();
+                  transition: all 0.3 * $Max-Screen-Intro-Transition;
+                  & > img {
+                    opacity: 1;
+                    translate: 0%;
+                    transition:
+                      translate $Max-Screen-Intro-Transition ease-in-out,
+                      opacity 0.3 * $Max-Screen-Intro-Transition ease-in 0.7 * $Max-Screen-Intro-Transition;
+                  }
+                }
+                & > :last-child {
+                  & > img {
+                    translate: 0%;
+                    opacity: 1;
+                    transition:
+                      translate 0.3 * $Max-Screen-Intro-Transition ease-out 1 * $Max-Screen-Intro-Transition,
+                      opacity 0.5 * $Max-Screen-Intro-Transition ease-in-out 0.8 * $Max-Screen-Intro-Transition;
+                  }
+                }
+              }
+              & > .Wrapper {
+                z-index: 8;
+                & > .Container {
+                  & > h1 {
+                    color: secondary-color();
+                    translate: 0%;
+                  }
+                  & > div > div > h3 {
+                    color: primary-counter-color();
+                  }
+                }
+              }
+            }
+          }
+          //////////////////// 4 in //////////////////////////////////////////////
+          &.Active + .Screen {
+            top: 100%;
+            left: 0;
+            z-index: -1;
+            & > .Container {
+              & > .Hands {
+                & > img {
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                }
+              }
+              & > .Wrapper {
+                & > .Container {
+                  & > h1 {
+                    translate: calc((100vw - #{$Max-Screen-Container}) / 2);
+                    color: primary-counter-color();
+                  }
+                  & > div > div > h3 {
+                    color: tertiary-color();
+                  }
+                }
+              }
+            }
+          }
+          ///////////////////// 3 out //////////////////////////////////////////////
+          &:has(+ .Active) {
+            top: -100%;
+            left: 0%;
+            z-index: 5;
+            & > .Container {
+              & > .Hands {
+                & > :first-child {
+                  opacity: 0;
+                }
+                & > :last-child {
+                  opacity: 0;
+                  translate: 50%;
+                  transition:
+                    opacity 0.15 * $Max-Screen-Intro-Transition ease-in-out 0.3 * $Max-Screen-Intro-Transition,
+                    translate 0.2 * $Max-Screen-Intro-Transition ease-in-out 0.25 * $Max-Screen-Intro-Transition;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  & > img {
+                    opacity: 0;
+                    translate: 50% 50%;
+                    transition:
+                      all $Max-Screen-Intro-Transition ease-in-out,
+                      translate 0.4 * $Max-Screen-Intro-Transition ease-in $Max-Screen-Intro-Transition,
+                      opacity 0.15 * $Max-Screen-Intro-Transition ease-in 1.2 * $Max-Screen-Intro-Transition;
+                  }
+                }
+                & > :last-child {
+                  @include position-left;
+
+                  & > img {
+                    opacity: 0;
+                    translate: 0% 50%;
+                    scale: 1.5;
+                    transition:
+                      scale 0.25 * $Max-Screen-Intro-Transition ease-in-out 0.1 * $Max-Screen-Intro-Transition,
+                      opacity 0.1 * $Max-Screen-Intro-Transition ease-in 0.25 * $Max-Screen-Intro-Transition,
+                      translate 0.15 * $Max-Screen-Intro-Transition ease-out 0.2 * $Max-Screen-Intro-Transition;
+                  }
+                }
+              }
+              & > .Wrapper {
+                & > .Container {
+                  & > h1 {
+                    color: primary-counter-color();
+                    translate: calc((#{$Max-Screen-Container} - 100vw) / 2);
+                    transition: all 0.5 * $Max-Screen-Intro-Transition ease-in-out;
+                  }
+                }
+              }
+            }
+          }
+          /////////////////////// 3 general //////////////////////////////////////////////
+          & > .Container {
+            & > .Hands {
+              & > :first-child {
+                @include position-top;
+                left: $Size-10;
+              }
+              & > :last-child {
+                @include position-top;
+                left: calc(7% + #{$Size-10});
+              }
+            }
+
+            & > .Background {
+              & > :first-child {
+                background-color: primary-counter-color();
+                clip-path: ellipse(70% calc(100% - #{$Size-10 * 2}) at 100% #{$Size-10});
+                height: 200%;
+                @include position-top;
+                backdrop-filter: blur($Size-3);
+              }
+              & > :last-child {
+                @include position-left;
+                backdrop-filter: blur($Size-1);
+                & > img {
+                  object-position: bottom left;
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(4) {
+          /// 4 active
+          &.Active {
+            top: 0%;
+            left: 0%;
+            & > .Container {
+              & > .Hands {
+                z-index: 7;
+                & > img {
+                  @for $i from 1 through 3 {
+                    &:nth-child(#{$i * 2}) {
+                      animation: hand-rotate-to-right
+                        0.34 *
+                        $Max-Screen-Intro-Transition
+                        ease-in
+                        (0.22 * $i + 0.5) *
+                        $Max-Screen-Intro-Transition;
+                    }
+                    &:nth-child(#{$i * 2 - 1}) {
+                      animation: hand-rotate-to-left
+                        0.34 *
+                        $Max-Screen-Intro-Transition
+                        ease-in
+                        (0.22 * $i + 0.5) *
+                        $Max-Screen-Intro-Transition;
+                    }
+                  }
+                }
+              }
+              & > .Background {
+                @include position-top;
+                & > :first-child {
+                  & > img {
+                    object-position: bottom left;
+                    transition: all $Max-Screen-Intro-Transition ease-in;
+                  }
+                }
+              }
+              & > .Wrapper {
+                z-index: 6;
+              }
+              & > .Object {
+                translate: 0%;
+                opacity: 1;
+                transition:
+                  translate 0.5 * $Max-Screen-Intro-Transition ease-out 1.35 * $Max-Screen-Intro-Transition,
+                  opacity 0.35 * $Max-Screen-Intro-Transition ease-in-out 1.4 * $Max-Screen-Intro-Transition;
+              }
+            }
+          }
+          /// 4 general
+          & > .Container {
+            & > .Hands {
+              @include d-flex--row--f-str;
+              align-items: flex-start;
+              position: relative;
+              & > img {
+                opacity: 0;
+                position: absolute;
+                transform-origin: top;
+                &:nth-child(2n-1) {
+                  right: $Size-10;
+                }
+                &:nth-child(2n) {
+                  left: $Size-10;
+                }
+              }
+            }
+            & > .Object {
+              position: absolute;
+              right: -$Size-12;
+              bottom: $Size-11;
+              translate: -100%;
+              opacity: 0;
+              z-index: 98;
+              & > img {
+                object-fit: contain;
+                object-position: bottom;
+                &:not(:first-child) {
+                  position: absolute;
+                }
+              }
+              & > :nth-child(4) {
+                // cf
+                bottom: $Size-7;
+                right: -$Size-6;
+                opacity: 0;
+                translate: 0% -200%;
+              }
+              & > :nth-child(3) {
+                // tuoi
+                bottom: $Size-7 + $Size-4;
+                left: $Size-10 + $Size-8 + $Size-5;
+                opacity: 0;
+                translate: 0% -200%;
+              }
+              & > :nth-child(5) {
+                // dac
+                bottom: $Size-7;
+                left: $Size-11 + $Size-8;
+                opacity: 0;
+                translate: 0% -200%;
+              }
+              & > :nth-child(2) {
+                // da
+                bottom: $Size-7 + $Size-4;
+                left: $Size-7 + $Size-4;
+                opacity: 0;
+                translate: 0% -200%;
+              }
+            }
+            & > .Background {
+              @include position-bot;
+              & > :first-child {
+                height: calc(100% + #{$Size-10});
+                @include position-bot;
+
+                & > img {
+                  object-position: top left;
+                }
+              }
+              & > :last-child {
+                clip-path: ellipse(70% calc(200% - #{$Size-10 * 2}) at 100% calc(-100% + #{$Size-10}));
+                @include position-top;
+                background-color: primary-counter-color();
+              }
+            }
+
+            & > .Container {
+              bottom: $Size-10;
+              padding-left: $Spacing-4;
+              z-index: 2;
+              & > h1 {
+                text-align: center;
+                @include position-out-bot;
+                background-color: primary-color();
+                right: 0;
+                padding-right: $Spacing-4;
+                padding-left: $Spacing-5;
+                @include border-left-radius($Size-3);
+                &::before {
+                  content: "";
+                  @include position-out-right;
+                  height: 100%;
+                  width: 100%;
+                  background-color: inherit;
+                }
+              }
+              & > h3 {
+                @include position-out-top;
+                width: 100%;
+                backdrop-filter: blur($Size-3) brightness(80%);
+                padding-left: $Spacing-4;
+                &::before {
+                  content: "";
+                  @include position-out-left;
+                  height: 100%;
+                  width: $Spacing-4;
+                  background-color: primary-counter-color();
+                  @include border-left-radius($Size-3);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      @keyframes hand-flip-out {
+        0% {
+          opacity: 1;
+          transform-origin: top;
+          transform: rotateX(0deg);
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: rotateX(90deg);
+          translate: 0% -40%;
+        }
+      }
+      @keyframes hand-turn-out {
+        0% {
+          opacity: 1;
+          transform-origin: right;
+          transform: rotateY(0deg);
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: rotateY(90deg);
+          translate: 10%;
+        }
+      }
+      @keyframes hand-turn-in {
+        0% {
+          opacity: 0;
+          transform-origin: left;
+          translate: -10%;
+          transform: rotateY(90deg);
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+          transform: rotateY(0deg);
+          translate: 0%;
+        }
+      }
+      @keyframes hand-rotate-to-right {
+        0% {
+          opacity: 0;
+          transform: rotate(120deg);
+          translate: 0% -50%;
+        }
+        20% {
+          opacity: 0.4;
+        }
+        30% {
+          opacity: 1;
+          transform: rotate(0deg);
+          translate: 0% 0%;
+        }
+        75% {
+          opacity: 1;
+          transform: rotate(0deg);
+          translate: 0% 0%;
+        }
+        90% {
+          opacity: 0.4;
+        }
+        100% {
+          opacity: 0;
+          translate: 0% -50%;
+          transform: rotate(-120deg);
+        }
+      }
+      @keyframes hand-rotate-to-left {
+        0% {
+          opacity: 0;
+          transform: rotate(-120deg);
+          translate: 0% -50%;
+        }
+        20% {
+          opacity: 0.4;
+        }
+        30% {
+          opacity: 1;
+          transform: rotate(0deg);
+          translate: 0% 0%;
+        }
+        75% {
+          opacity: 1;
+          transform: rotate(0deg);
+          translate: 0% 0%;
+        }
+        90% {
+          opacity: 0.4;
+        }
+        100% {
+          opacity: 0;
+          translate: 0% -50%;
+          transform: rotate(120deg);
+        }
+      }
+      @keyframes hand-scale-in {
+        0% {
+          opacity: 1;
+          scale: 0;
+          translate: 0% -100%;
+        }
+        95% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          scale: 1;
+          translate: 0% 0%;
+        }
+      }
+    }
+    & > .RMA__Container {
+      height: $Size-13;
+      @include d-flex--row--cen;
+      overflow: hidden;
+      position: relative;
+      & > .Map {
+        flex-grow: 1;
+        aspect-ratio: 1.372;
+        z-index: 0;
+        overflow: hidden;
+        @include border-left-radius($Size-5);
+        @include d-flex--row--cen;
+        position: relative;
+        & > .Container {
+          width: 100%;
+          & > img {
+            transition:
+              all 0.8s ease-in-out,
+              transform 0.6s ease-out;
+            aspect-ratio: 1.372;
+            @include size-inherit;
+            object-fit: contain;
+            object-position: left;
+          }
+        }
+        & > .Dot {
+          z-index: 1;
+          @include size-inherit();
+          position: absolute;
+          color: secondary-color();
+          font-size: 1rem;
+          & > .Container {
+            @include size-inherit();
+            @include d-flex--col--cen;
+            position: relative;
+            & > svg {
+              position: absolute;
+              z-index: 98;
+              animation: Dot-Jumping 0.6s ease-in-out infinite;
+              animation-play-state: inherit;
+            }
+            & > img {
+              position: absolute;
+              width: 50px;
+              object-fit: contain;
+              &:not(:first-child) {
+                animation: Border-Spreading 0.6s ease-in-out infinite 0.3s;
+                animation-play-state: inherit;
+              }
+            }
+            @keyframes Border-Spreading {
+              0% {
+                transform: scale(50%);
+                opacity: 0.1;
+              }
+              30% {
+                opacity: 0.4;
+              }
+              100% {
+                opacity: 0;
+                transform: scale(200%);
+              }
+            }
+            @keyframes Dot-Jumping {
+              0% {
+                transform: translateY(-10%);
+              }
+              50% {
+                transform: translateY(-80%);
+              }
+              100% {
+                transform: translateY(-1%);
+              }
+            }
+          }
+        }
+        &:has(+ .Content > .Container > .List > .Wrapper > .Box.Active) {
+          & > .Container {
+            width: unset;
+          }
+        }
+      }
+      & > .Content {
+        z-index: 1;
+        width: $Size-11 + $Size-8;
+        height: 100%;
+        @include d-flex--col--cen;
+        position: relative;
+        overflow: hidden;
+        &:has(> .Container > .List > .Wrapper > .Box.Active) {
+          & > .Button {
+            top: 0;
+          }
+          & > .Bot-Button-Container {
+            bottom: 0;
+          }
+          & > .Container {
+            & > .List {
+              height: 100%;
+              animation: none;
+              & > * {
+                animation-play-state: inherit;
+              }
+              & > .Wrapper {
+                height: 0px;
+                margin-bottom: 0px;
+
+                &:has(> .Active) {
+                  height: 100%;
+                  border-radius: 0px;
+                  @include border-right-radius($Size-5);
+                  transition: all 0.5s ease-in-out;
+                  cursor: default;
+                }
+                & > .Box {
+                  opacity: 0;
+                  &.Active {
+                    opacity: 1;
+                    background-color: primary-counter-color();
+                    & > .Image-Thumb {
+                      height: $Size-10;
+                    }
+                    & > .Info {
+                      color: primary-color();
+                      backdrop-filter: unset;
+                      position: static;
+                      & > .Primary {
+                      }
+                      & > .Secondary {
+                        & > .Line {
+                          @include d-flex--row--f-str;
+                          align-items: flex-start;
+                          gap: $Spacing-2;
+                          padding-left: $Spacing-2;
+                          margin-bottom: $Spacing-1;
+                          & > .Icon {
+                            width: $Size-5;
+                            @include d-flex--row--cen;
+                          }
+                          & > .Direct-Text {
+                            flex-grow: 1;
+                            & > .Separation {
+                              text-align: center;
+                            }
+                            & > span {
+                              display: block;
+                              text-align: justify;
+                            }
+                          }
+                        }
+                        & > .Article {
+                          margin-top: $Spacing-1;
+                          display: block;
+                          padding-left: $Spacing-2;
+                          & > p {
+                            text-indent: $Spacing-2 + $Size-5;
+                            text-align: justify;
+                            margin-bottom: $Spacing-1;
+                          }
+                        }
+                        & > ul {
+                          display: none;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        & > .Button {
+          transition: all 0.4s ease-in-out;
+          @include position-left;
+          top: -$Spacing-6;
+          color: primary-counter-color();
+          padding: $Spacing-2;
+          background-color: secondary-color();
+          z-index: 2;
+          @include d-flex--col--cen;
+          border-radius: $Size-3;
+          border-top-left-radius: 0px;
+          font-size: larger;
+          cursor: pointer;
+        }
+        & > .Bot-Button-Container {
+          transition: all 0.3s ease-in-out;
+          @include position-right;
+          bottom: -$Size-7 - $Spacing-2;
+          @include d-flex--row--s-bet;
+          width: 100%;
+          @include horizontal-padding($Spacing-3);
+          & > a {
+            flex-grow: 1;
+            @include horizontal-padding($Spacing-2);
+            text-decoration: none;
+            font-size: larger;
+            font-weight: bold;
+          }
+          & > div {
+            width: $Size-7;
+            &:first-child {
+              @include border-left-radius(50%);
+              padding-left: $Spacing-1;
+            }
+            &:last-child {
+              @include border-right-radius(50%);
+              padding-right: $Spacing-1;
+            }
+          }
+          & > :nth-child(n) {
+            transition: all 0.4s ease-in-out;
+            height: $Size-7;
+            margin-bottom: $Spacing-2;
+            background-color: secondary-color();
+            color: primary-counter-color();
+            @include d-flex--col--cen;
+            cursor: pointer;
+          }
+        }
+        & > .Container {
+          @include size-inherit;
+          overflow: hidden;
+
+          & > .List {
+            animation: listRollUp 15s ease infinite;
+            @keyframes listRollUp {
+              0% {
+                translate: 0% 0%;
+              }
+              100% {
+                translate: 0% 100%;
+              }
+            }
+            & > .Pseudo {
+              @include position-out-top;
+              width: 100%;
+            }
+            @include d-flex--col--f-str;
+            width: 100%;
+            height: fit-content;
+            .Wrapper {
+              height: $Size-10;
+              width: 100%;
+              overflow: hidden;
+              border-radius: $Size-4;
+              transition: all 0.3s ease-in-out;
+              margin-bottom: $Spacing-2;
+              cursor: pointer;
+              & > .Box {
+                @include d-flex--col--f-str;
+                position: relative;
+                @include size-inherit;
+                & > .Image-Thumb {
+                  @include size-inherit;
+                  & > img {
+                    object-fit: cover;
+                  }
+                }
+                & > .Info {
+                  padding: $Spacing-1;
+                  backdrop-filter: blur($Size-2) brightness(120%) contrast(60%) saturate(50%);
+                  @include position-bot;
+                  color: primary-counter-color();
+                  width: 100%;
+                  & > .Primary {
+                    width: 100%;
+                    @include d-flex--row--cen;
+                    position: relative;
+                    margin-bottom: $Spacing-2;
+                    gap: $Spacing-1;
+                    & > .Type {
+                      font-size: 1.5em;
+                      rotate: -15deg;
+                      color: quaternary-color();
+                    }
+                  }
+                  & > .Secondary {
+                    width: 100%;
+                    overflow: hidden;
+                    & > .Line {
+                      display: none;
+                    }
+                    & > .Article {
+                      display: none;
+                    }
+                    & > ul {
+                      width: 100%;
+                      &.Animation {
+                        animation: rollUp 5s ease infinite;
+                      }
+                      & > li {
+                        width: 100%;
+                        list-style-type: none;
+                        &:not(:first-child) {
+                          @include position-out-bot;
+                          &:last-child {
+                            top: 200%;
+                          }
+                        }
+                        & > .Line {
+                          width: 100%;
+                          @include d-flex--row--f-str;
+                          align-items: flex-start;
+                          gap: $Spacing-2;
+                          padding-left: $Spacing-2;
+                          & > .Icon {
+                            width: $Size-5;
+                            @include d-flex--row--cen;
+                          }
+                          & > .Direct-Text {
+                            flex-grow: 1;
+                            width: 0;
+                          }
+                          & > .Text {
+                            flex-grow: 1;
+                            width: 0;
+                            overflow: hidden;
+                            & > .Container {
+                              animation: rollLeft 15s ease infinite;
+                              @include d-flex--col--cen;
+                              width: fit-content;
+                              & > p {
+                                width: max-content;
+                                margin-right: $Spacing-1;
+                                &:last-child {
+                                  @include position-out-right;
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    @keyframes rollUp {
+                      0% {
+                        transform: translateY(0%);
+                      }
+                      30% {
+                        transform: translateY(0%);
+                      }
+                      50% {
+                        transform: translateY(-100%);
+                      }
+                      80% {
+                        transform: translateY(-100%);
+                      }
+                      100% {
+                        transform: translateY(-200%);
+                      }
+                    }
+                    @keyframes rollLeft {
+                      0% {
+                        transform: translateX(-0%);
+                      }
+                      20% {
+                        transform: translateX(0%);
+                      }
+                      100% {
+                        transform: translateX(-100%);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      &[data-device="desktop"] {
+        & > .Content {
+          & > .Button {
+            &:hover {
+              backdrop-filter: blur($Size-2);
+              background-color: primary-counter-color(0.4);
+              color: secondary-color();
+            }
+          }
+          & > .Bot-Button-Container {
+            & > :nth-child(n) {
+              &:hover {
+                backdrop-filter: blur($Size-1 * 1.5);
+                background-color: primary-counter-color(0.4);
+                color: secondary-color();
+              }
+            }
+          }
+        }
+      }
+      &[data-device="mobile"] {
+        & > .Content {
+          & > .Bot-Button-Container {
+            a {
+              border-right: $Size-1 solid primary-counter-color();
+              border-left: $Size-1 solid primary-counter-color();
+            }
+          }
+        }
+      }
+    }
+    & > .MS__Container {
+      @include d-flex--col--s-bet;
+      width: 100%;
+      gap: $Spacing-4;
+      position: relative;
+      & > .Loading-Screen {
+        @include size-inherit;
+        position: absolute;
+      }
+      & > .Books {
+        height: ($Max-Screen-Container + $Spacing-1) / 2;
+        width: 100%;
+        @include d-flex--row--cen;
+        position: relative;
+        border-bottom: $Size-3 solid currentColor;
+        border-top: $Size-1 solid currentColor;
+        border-left: $Size-2 solid currentColor;
+        border-right: $Size-2 solid currentColor;
+
+        background-color: primary-counter-color();
+        color: secondary-color();
+        &::before {
+          content: "";
+          height: calc(100% - #{$Size-3});
+          width: $Size-3;
+          @include position-top;
+          background-color: primary-color(0.2);
+          backdrop-filter: blur($Size-3);
+          z-index: 96;
+        }
+        & > .Book {
+          @include size-inherit;
+          background-color: #c1bdba;
+          border-bottom: $Size-3 solid #c1bdba;
+          border-left: $Size-3 solid #c1bdba;
+          border-right: $Size-3 solid #c1bdba;
+        }
+        & > .Left {
+          height: 100%;
+          width: 50%;
+          @include position-left;
+          z-index: 97;
+        }
+        & > .Right {
+          height: 100%;
+          width: 50%;
+          @include position-right;
+          z-index: 97;
+        }
+      }
+      .Pages {
+        @include size-inherit;
+        transition: all 0.4s ease-out;
+        position: relative;
+        transform-style: preserve-3d;
+        @for $i from 1 through 15 {
+          &.Current-#{$i} {
+            & > :has(+ :nth-child(#{$i})) {
+              z-index: 94;
+              pointer-events: none;
+            }
+            & > :has(~ :nth-child(#{$i})) {
+              & > .Container {
+                opacity: 1;
+              }
+              & > .Backface {
+                opacity: 0;
+              }
+            }
+            & > :nth-child(#{$i}) {
+              z-index: 95;
+              & > .Container {
+                pointer-events: all;
+                filter: unset;
+                opacity: 1;
+                & > .Button {
+                  opacity: 1;
+                  transform: unset;
+                }
+              }
+              & > .Backface {
+                opacity: 0;
+              }
+            }
+            & > :nth-child(#{$i}) ~ .Page {
+              transform: rotateY(180deg);
+              & > .Container {
+                opacity: 0;
+              }
+              & > .Backface {
+                opacity: 1;
+              }
+            }
+            & > :nth-child(#{$i}) + .Page {
+              z-index: 94;
+              & > .Backface {
+                pointer-events: all;
+                filter: unset;
+                & > .Button {
+                  opacity: 1;
+                  transform: unset;
+                }
+                & > .Image-List {
+                  animation-play-state: inherit;
+                  & > .Slider {
+                    animation-play-state: inherit;
+                  }
+                }
+              }
+            }
+            & > :nth-child(#{$i}) + .Page + .Page {
+              z-index: 93;
+            }
+            & > :nth-child(#{$i}) + .Page + .Page {
+              z-index: 92;
+            }
+          }
+        }
+
+        &.Loading {
+          background-image: url($Page-Skeleton);
+          background-size: contain;
+          & > :nth-child(n) {
+            opacity: 0;
+            will-change: opacity;
+            transition: opacity 1s ease-in-out;
+          }
+          &::after {
+            height: 43%;
+            width: 100%;
+            @include position-top;
+            z-index: 97;
+            content: "";
+            background-image: linear-gradient(90deg, rgba(#ccc, 0), rgba(#fff, 0.3), rgba(#ccc, 0));
+            background-size: 10% 100%;
+            background-repeat: no-repeat;
+            background-position: left 0 top 0;
+            animation: loadingShine 1.5s ease-out infinite;
+          }
+          &::before {
+            height: 57%;
+            width: 100%;
+            @include position-bot;
+            z-index: 97;
+            content: "";
+            background-image: linear-gradient(90deg, rgba(#ccc, 0), rgba(#fff, 0.3), rgba(#ccc, 0));
+            background-size: 10% 100%;
+            background-repeat: no-repeat;
+            background-position: left 0 top 0;
+            animation: loadingShine 1.75s ease-in infinite;
+          }
+        }
+
+        @keyframes loadingShine {
+          to {
+            background-position: right 0 top 0;
+          }
+        }
+        & > .Page {
+          animation-play-state: inherit;
+          height: 100%;
+          width: 50%;
+          @include position-top;
+          left: 0;
+          transition:
+            filter 0.1s 0.1s ease-out,
+            zIndex 0s,
+            transform 0.2s cubic-bezier(0.6, 0.045, 0.165, 1);
+          right: 0;
+          transform-origin: right;
+          z-index: -1;
+          will-change: z-index;
+
+          & > div > .Button {
+            cursor: pointer;
+            color: quaternary-color();
+            background-color: secondary-color();
+            @include position-bot;
+            display: flex;
+            transition: all 0.2s ease-in-out 0.1s;
+            height: 5%;
+            width: 100%;
+            font-size: 2rem;
+            opacity: 0;
+            transform: scaleX(0);
+            & > :first-child {
+              position: absolute;
+              bottom: $Spacing-1;
+              transition: all 0.2s ease-in 0.2s;
+            }
+          }
+          & > .Cover {
+            filter: unset;
+            & > img {
+              @include size-inherit;
+              object-fit: cover;
+              filter: grayscale(1);
+              transition: all 0.5s ease-in-out;
+            }
+            & > .Title {
+              @include position-bot;
+              color: primary-counter-color(1);
+              backdrop-filter: blur($Size-2);
+              & > h1 {
+                padding: $Spacing-2;
+                background-color: primary-color(0.1);
+                font-size: 4rem;
+              }
+              & > h3 {
+                padding: $Spacing-2;
+              }
+            }
+          }
+          & > .Container {
+            will-change: opacity, filter;
+            animation-play-state: inherit;
+            pointer-events: none;
+            @include size-inherit;
+            @include position-top;
+            filter: sepia(1);
+            transition:
+              opacity 0s 0.05s,
+              filter 0.4s ease-in-out 0.2s;
+            background-color: primary-counter-color();
+            backface-visibility: hidden;
+            @include d-flex--col--cen;
+            &.Cover {
+              & > img {
+                object-position: 40%;
+              }
+              & > .Title {
+                margin-bottom: $Spacing-5;
+                left: 0;
+                & > h3 {
+                  text-align: right;
+                  background-color: quaternary-color(0.8);
+                }
+                & > h1 {
+                  padding-left: $Spacing-6;
+                  text-shadow:
+                    0 0 $Size-8 primary-counter-color(0.5),
+                    0 0 $Size-5 quaternary-color(0.8),
+                    $Size-1 $Size-1 $Size-1 tertiary-color(0.5),
+                    -#{$Size-1} -#{$Size-1} $Size-1 tertiary-color(0.5);
+                }
+              }
+            }
+            & > .Image {
+              overflow: hidden;
+              @include size-inherit;
+              background-color: primary-counter-color();
+              & > img {
+                @include size-inherit;
+                object-fit: contain;
+              }
+            }
+            & > .Button {
+              border-top-right-radius: 50%;
+              left: 0;
+              & > :first-child {
+                left: -0.3rem;
+              }
+            }
+          }
+          & > .Backface {
+            animation-play-state: inherit;
+            will-change: opacity, filter;
+            filter: sepia(1);
+            pointer-events: none;
+            transition:
+              opacity 0s 0.05s,
+              filter 0.4s ease-in-out 0.4s;
+            transform: scaleX(-1);
+            @include size-inherit;
+            background-color: primary-counter-color();
+            backface-visibility: hidden;
+            @include d-flex--row--s-bet;
+            &.Cover {
+              & > img {
+                object-position: 0%;
+              }
+              & > .Title {
+                margin-bottom: $Spacing-7;
+                right: 0;
+
+                & > h1 {
+                  padding-right: $Spacing-6;
+                  text-shadow:
+                    0 0 $Size-8 primary-color(),
+                    0 0 $Size-4 tertiary-color(0.7),
+                    $Size-1 $Size-1 $Size-1 secondary-color(0.5),
+                    -#{$Size-1} -#{$Size-1} $Size-1 secondary-color(0.5);
+                }
+                & > h3 {
+                  text-align: left;
+                  background-color: tertiary-color(0.8);
+                }
+              }
+            }
+            & > .Image {
+              overflow: hidden;
+              @include size-inherit;
+              background-color: primary-counter-color();
+              & > img {
+                @include size-inherit;
+                object-fit: contain;
+              }
+            }
+            & > .Image-List {
+              @include position-bot;
+              width: 100%;
+              height: 35%;
+              overflow: hidden;
+              background-color: primary-counter-color();
+              &::before {
+                content: "";
+                height: 100%;
+                width: 30%;
+                background: linear-gradient(to right, primary-counter-color() 10%, transparent 50%);
+                @include position-left;
+                z-index: 1;
+              }
+              background-color: primary-counter-color();
+              &::after {
+                content: "";
+                height: 100%;
+                width: 30%;
+                background: linear-gradient(to left, primary-counter-color() 10%, transparent 50%);
+                @include position-right;
+                z-index: 1;
+                bottom: 0;
+              }
+              & > .Slider {
+                @include d-flex--row--f-str;
+                width: max-content;
+                height: 100%;
+                animation: listRollHalfRight ease infinite;
+                animation-play-state: paused;
+                @keyframes listRollHalfRight {
+                  to {
+                    translate: -50%;
+                  }
+                }
+                & > .Image-Thumb {
+                  height: 100%;
+                  border-left: $Size-1 solid primary-counter-color();
+                  & > img {
+                    height: 100%;
+                    aspect-ratio: 1;
+                    object-fit: cover;
+                  }
+                }
+              }
+            }
+            & > .Date {
+              @include position-left;
+              top: 0;
+              transform: translateY(calc(-1.5rem - #{$Spacing-2 * 3}));
+              font-size: 1.5rem;
+              padding: $Spacing-2;
+              backdrop-filter: blur($Size-1) brightness(0.8);
+              color: primary-counter-color();
+              opacity: 0;
+              transition: all 0.3s ease-in-out;
+            }
+            & > .Button {
+              border-top-left-radius: 50%;
+              right: 0;
+              z-index: 2;
+              & > :first-child {
+                right: -0.3rem;
+              }
+            }
+          }
+          img {
+            background-color: primary-anti-color();
+          }
+        }
+      }
+      & > .Line {
+        width: 100%;
+        height: $Size-9 + $Size-7;
+        @include d-flex--row--s-bet;
+        @include horizontal-padding(5%);
+        position: relative;
+        overflow: hidden;
+        &::before {
+          content: "";
+          width: 200%;
+          height: $Size-1;
+          background: linear-gradient(
+            to right,
+            transparent,
+            tertiary-color(0.4) 10%,
+            primary-color() 30%,
+            quaternary-color(0.4) 40%,
+            transparent 50%,
+            tertiary-color(0.4) 60%,
+            primary-color() 80%,
+            quaternary-color(0.4) 90%,
+
+            transparent
+          );
+          animation: timeMarching 2s ease-out infinite;
+          animation-play-state: inherit;
+          @include position-left;
+        }
+        @keyframes timeMarching {
+          0% {
+            translate: -50%;
+          }
+
+          100% {
+            translate: 0%;
+          }
+        }
+        & > .Frame {
+          width: calc(45% - $Size-5);
+          flex-grow: 1;
+          height: 100%;
+          gap: 10%;
+          position: relative;
+          &.History {
+            @include d-flex--row--f-str;
+
+            padding-right: $Spacing-6;
+            & > :first-child {
+              & > .Info {
+                font-size: 1.6rem;
+              }
+            }
+            & > :nth-child(n) {
+              flex-grow: 1;
+              &.Period {
+                width: inherit;
+                @include d-flex--row--s-bet;
+
+                & > .Point {
+                  transform: scaleX(0.2);
+                  & > .Info {
+                    opacity: 0;
+                  }
+
+                  &.Active {
+                    transform: none;
+                    @include horizontal-margin($Spacing-2);
+                    & > .Info {
+                      opacity: 1;
+                    }
+                  }
+                }
+              }
+            }
+            .Point {
+              & > .Dot {
+                &::before {
+                  border: solid $Size-2 currentColor;
+                }
+              }
+            }
+          }
+          &.Plan {
+            @include d-flex--row--s-bet;
+            padding-left: $Spacing-6;
+            & > .Point {
+              & > .Dot {
+                &::before {
+                  background-color: primary-color();
+                }
+              }
+            }
+          }
+        }
+        .Point {
+          @include d-flex--col--cen;
+          cursor: pointer;
+          position: relative;
+          transition: all 0.4s ease-out;
+          width: 0%;
+          height: 0%;
+          flex-grow: 1;
+          &.Now {
+            z-index: 93;
+            flex-grow: 0;
+            color: secondary-color();
+            width: max-content;
+            &.Active {
+              & > .Info {
+                font-weight: bolder;
+              }
+            }
+            & > .Info {
+              width: max-content;
+              transition: all 0.2s ease-in-out;
+            }
+            & > .Dot {
+              &::after {
+                background-color: tertiary-color();
+                border: solid $Size-2 secondary-color();
+              }
+              &::before {
+                display: none;
+              }
+            }
+            & > .Time {
+              opacity: 1;
+              transition: all 0.2s ease-in-out;
+            }
+          }
+          &.Active {
+            cursor: default;
+            & > .Info {
+              color: secondary-color();
+              margin-bottom: $Spacing-4;
+              opacity: 1;
+            }
+            & > .Dot {
+              transform: scaleY(0.5) scale(1.3);
+            }
+          }
+          & > .Info {
+            height: 50%;
+            margin-bottom: $Spacing-2;
+            @include d-flex--col--f-end;
+            @include horizontal-padding($Spacing-2);
+            font-size: 1.2rem;
+            @include position-out-top;
+          }
+          & > .Time {
+            @include d-flex--col--f-str;
+            height: 50%;
+            opacity: 0;
+            transition: all 0.4s ease-out 0.2s;
+            width: max-content;
+            pointer-events: none;
+            margin-top: $Spacing-3;
+            @include position-out-bot;
+          }
+          & > .Dot {
+            @include d-flex--col--cen;
+            position: absolute;
+            &::after {
+              content: "";
+              height: $Size-3;
+              width: $Size-3;
+              background-color: primary-color();
+              border-radius: 50%;
+              position: absolute;
+              transition: all 0.5s ease-in-out;
+            }
+            &::before {
+              content: "";
+              height: $Size-4 + $Size-1;
+              width: $Size-4 + $Size-1;
+              background-color: transparent;
+              border-radius: 50%;
+              color: primary-color();
+              position: absolute;
+              transition: all 0.5s ease-in-out;
+            }
+          }
+        }
+      }
+      &[data-device="desktop"] {
+        & > .Books {
+          &:has(> .Left:hover) {
+            & > .Book {
+              & > .Pages {
+                @for $i from 1 through 15 {
+                  &.Current-#{$i} {
+                    & > .Page {
+                      &:nth-child(#{$i}) + .Page {
+                        & > .Backface {
+                          & > .Date {
+                            transform: unset;
+                            opacity: 1;
+                          }
+                        }
+                      }
+                      &:nth-child(#{$i}) {
+                        transform: rotateY(20deg);
+                        & > .Container {
+                          &.Cover {
+                            & > img {
+                              filter: none;
+                            }
+                          }
+                          box-shadow: -1vmin 0 1vmin 0 primary-color(0.5);
+                          pointer-events: all;
+                          & > .Button {
+                            & > :first-child {
+                              scale: 2;
+                              translate: 0 -0.5rem;
+                              transition: all 0.2s ease-in-out;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          &:has(> .Right:hover) {
+            & > .Book {
+              & > .Pages {
+                @for $i from 1 through 15 {
+                  &.Current-#{$i} {
+                    & > .Page {
+                      &:nth-child(#{$i}) + .Page {
+                        transform: rotateY(160deg);
+                        & > .Backface {
+                          box-shadow: 1vmin 0 1vmin 0 primary-color(0.5);
+                          pointer-events: all;
+                          &.Cover {
+                            & > img {
+                              filter: none;
+                            }
+                          }
+                          & > .Date {
+                            transform: unset;
+                            opacity: 1;
+                          }
+                          & > .Button {
+                            & > :first-child {
+                              scale: 2;
+                              translate: 0 -0.5rem;
+                              transition: all 0.2s ease-in-out;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          & > .Left,
+          & > .Right {
+            cursor: pointer;
+          }
+        }
+        & > .Line {
+          & > .Frame {
+            &.History {
+              & > :nth-child(n) {
+                &.Period {
+                  & > .Point {
+                    &:hover {
+                      transform: none;
+                      & > .Info {
+                        opacity: 1;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            &.Plan {
+              & > .Point {
+                &:not(.Active):hover {
+                  & > .Dot {
+                    &::before {
+                      background-color: quaternary-color();
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .Point {
+            &.Now {
+              &:not(.Active):hover {
+                color: quaternary-color();
+                & > .Dot {
+                  &::after {
+                    background-color: secondary-color();
+                  }
+                }
+              }
+            }
+            &:not(.Now):not(.Active):hover {
+              color: quaternary-color();
+              & > .Dot {
+                &::after {
+                  background-color: secondary-color();
+                }
+                &::before {
+                  color: secondary-color();
+                }
+              }
+              & > .Time {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+      &[data-device="mobile"] {
+        & > .Books {
+          & > .Book {
+            & > .Pages {
+              @for $i from 1 through 15 {
+                &.Current-#{$i} {
+                  & > .Page {
+                    &:nth-child(#{$i}) + .Page {
+                      & > .Backface {
+                        & > .Date {
+                          transform: unset;
+                          opacity: 1;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        & > .Line {
+          &:has(.Point.Active) {
+            & > .Now {
+              & > .Time {
+                opacity: 0;
+              }
+            }
+          }
+          & > .Frame {
+            .Point {
+              &.Active {
+                & > .Time {
+                  opacity: 1;
+                  background-color: red;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    & > .P__Container {
+      height: $Size-12 + $Size-6;
+      @include d-flex--col--cen;
+      overflow: visible;
+      position: relative;
+      width: 100%;
+
+      & > .Category__Presentation {
+        @include d-flex--col--f-str;
+        align-self: flex-start;
+        position: relative;
+        @include position-top;
+        z-index: 98;
+        transition: all 0.3s ease-in-out;
+        align-items: flex-start;
+        backdrop-filter: blur($Size-1);
+        border-radius: $Size-4;
+        overflow: hidden;
+        & > p {
+          @include d-flex--row--f-str;
+          transition:
+            all 0.2s ease-in-out 0.2s,
+            opacity 0.2s ease-in-out;
+          height: 0;
+          opacity: 0;
+          width: 100%;
+          font-size: 2em;
+          text-align: left;
+          & > svg {
+            display: inline;
+            margin-right: $Spacing-2;
+            transition: all 0.4s ease-in-out 0.1s;
+          }
+          &.Active {
+            color: secondary-color();
+            opacity: 1;
+            height: fit-content;
+            font-weight: bolder;
+          }
+        }
+      }
+      & > .Categories {
+        width: 100%;
+        flex-grow: 1;
+        overflow: hidden;
+        & > .Container {
+          @include size-inherit;
+          transition: all 0.5s ease-out 0.2s;
+          & > .Products {
+            @include size-inherit;
+            @include d-flex--row--f-str;
+            overflow: hidden;
+            &::-webkit-scrollbar {
+              display: none;
+            }
+            & > .Container {
+              @include d-flex--row--f-str;
+              height: 100%;
+              width: fit-content;
+              transition: all 0.5s ease-out;
+              &.Instant {
+                transition: none;
+              }
+              &.No-Slide {
+                justify-content: space-between;
+                width: 100%;
+
+                & > .Product {
+                  & > .Image-Thumb {
+                    transform: scale(1);
+                  }
+                  &.Active {
+                    position: relative;
+                    & > .Image-Thumb {
+                      transform: scale(1.3);
+                    }
+                  }
+                  &.Active + div {
+                    & > .Image-Thumb {
+                      transform: scale(1);
+                    }
+                  }
+                  &:has(+ .Active) {
+                    & > .Image-Thumb {
+                      transform: scale(1);
+                    }
+                  }
+                  &.Active + div + div {
+                    & > .Image-Thumb {
+                      transform: scale(1);
+                    }
+                  }
+                  &:has(+ div + .Active) {
+                    & > .Image-Thumb {
+                      transform: scale(1);
+                    }
+                  }
+                }
+              }
+              & > .Product {
+                width: $Size-11;
+                aspect-ratio: 1;
+                background-color: transparent;
+                @include d-flex--col--cen;
+                translate: 0% -10%;
+                &::before {
+                  content: "";
+                  width: 0%;
+                  height: $Size-2;
+                  background-color: secondary-color();
+                  @include position-out-bot;
+                  margin-top: $Spacing-4;
+                  transition: all 0.5s ease-in-out;
+                }
+                &.Active {
+                  z-index: 98;
+
+                  &::before {
+                    width: 100%;
+                  }
+                  & > .Image-Thumb {
+                    transition:
+                      all 0.4s ease-out,
+                      transform 0.5s ease-in-out,
+                      translate 0.3s ease-out 0.1s;
+                    transform: scale(1.25);
+                  }
+                }
+                &.Active + div {
+                  z-index: 97;
+                  & > .Image-Thumb {
+                    transform: scale(1) translateX(8%) translateY(-5%);
+                  }
+                }
+                &:has(+ .Active) {
+                  z-index: 97;
+                  & > .Image-Thumb {
+                    transform: scale(1) translateX(-8%) translateY(-5%);
+                  }
+                }
+                &.Active + div + div {
+                  & > .Image-Thumb {
+                    transform: scale(0.8) translateX(-5%) translateY(-10%);
+                  }
+                }
+                &:has(+ div + .Active) {
+                  & > .Image-Thumb {
+                    transform: scale(0.8) translateX(5%) translateY(-10%);
+                  }
+                }
+                & > .Image-Thumb {
+                  width: 100%;
+                  height: 100%;
+                  object-position: top;
+                  transform: scale(0.7) translateY(-10%);
+                  transition:
+                    all 0.4s ease-out,
+                    transform 0.4s ease-in-out,
+                    translate 0.3s ease-out 0.2s;
+                }
+              }
+            }
+          }
+        }
+      }
+      & > .Product__Presentation {
+        @include d-flex--row--cen;
+        width: 100%;
+        & > .Display {
+          width: $Size-11;
+          overflow: hidden;
+          @include d-flex--row--cen;
+          @include horizontal-margin($Spacing-2);
+          & > .Presentation {
+            width: fit-content;
+            @include d-flex--row--cen;
+            overflow-x: visible;
+            transition: all 0.5s ease-out 0.2s;
+            & > div {
+              width: $Size-12;
+              @include d-flex--col--cen;
+              text-align: center;
+              & > .Name {
+              }
+              & > .Price {
+                margin-top: $Spacing-2;
+              }
+            }
+          }
+        }
+        & > .Button {
+          font-size: 2.5rem;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            color: secondary-color();
+          }
+        }
+      }
+      &[data-device="desktop"] {
+        & > .Category__Presentation {
+          &:hover {
+            background-color: primary-color(0.2);
+            & > p {
+              color: primary-counter-color();
+              transition:
+                all 0.4s ease-in-out,
+                opacity 0.3s ease-in 0.1s;
+              height: $Size-8;
+              max-height: min-content;
+              opacity: 1;
+              cursor: pointer;
+              @include horizontal-padding($Spacing-2);
+              & > svg {
+                rotate: -90deg;
+              }
+              &.Active {
+                cursor: default;
+                color: secondary-color();
+                &:hover {
+                  background-color: primary-counter-color(0.5);
+                }
+              }
+              &:not(.Active):hover {
+                background-color: secondary-color();
+                color: primary-counter-color();
+              }
+            }
+          }
+        }
+      }
+      &[data-device="mobile"] {
+        & > .Category__Presentation[data-hover="true"] {
+          background-color: primary-color(0.2);
+          & > p {
+            color: primary-counter-color();
+            transition:
+              all 0.4s ease-in-out,
+              opacity 0.3s ease-in 0.1s;
+            height: $Size-8;
+            max-height: min-content;
+            opacity: 1;
+            cursor: pointer;
+            @include horizontal-padding($Spacing-2);
+            & > svg {
+              rotate: -90deg;
+            }
+            &.Active {
+              cursor: default;
+              color: secondary-color();
+            }
+          }
+        }
+      }
+    }
+    & > .S__Container {
+      @include d-grid--col(4, auto);
+      align-items: stretch;
+      justify-content: space-between;
+      margin-bottom: $Spacing-2;
+      & > .Blog {
+        width: $Size-11;
+        @include d-flex--col--f-str;
+        position: relative;
+        transition: all 0.4s ease-in-out;
+        margin-bottom: $Spacing-3;
+        @include border-top-radius($Size-5);
+        & > a {
+          @include size-inherit;
+          @include position-top;
+        }
+
+        & > .Image {
+          width: 100%;
+          aspect-ratio: 1;
+          @include d-flex--col--cen;
+          position: relative;
+          overflow: hidden;
+          & > .Image-Thumb {
+            @include size-inherit;
+            transition: all 0.3s ease-in-out;
+          }
+          & > .Time {
+            @include position-bot;
+            background-color: primary-color(0.5);
+            color: primary-counter-color();
+            text-align: right;
+            width: 100%;
+            height: fit-content;
+            @include horizontal-padding($Spacing-2);
+            transition: all 0.2s ease-in 0.5s;
+            translate: 0% 100%;
+            & > p {
+              transition: all 0.4s ease-out;
+              translate: -150%;
+            }
+          }
+        }
+        & > .Info {
+          @include d-flex--col--s-bet;
+          flex-grow: 1;
+          & > .Title {
+            @include horizontal-padding($Spacing-1);
+            padding-top: $Spacing-2;
+            padding-bottom: $Spacing-1;
+            transition: all 0.3s ease-in-out;
+            & > :only-child {
+              text-align: justify;
+            }
+          }
+          & > .Detail {
+            height: fit-content;
+            & > .Author {
+              color: secondary-color();
+              width: 100%;
+              text-align: right;
+              transition: all 0.3s ease-in-out;
+              margin-bottom: $Spacing-1;
+              @include horizontal-padding($Spacing-2);
+              & > :first-child {
+                margin-right: $Spacing-2;
+                font-size: 0.9em;
+              }
+            }
+            & > .Content {
+              width: 100%;
+              @include d-flex--col--cen;
+              position: relative;
+              @include border-bot-radius($Size-5);
+              overflow: hidden;
+              @include horizontal-padding($Spacing-1);
+
+              & > .Text {
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                display: -webkit-box;
+                word-break: keep-all;
+                color: secondary-color();
+                text-indent: 10%;
+                text-align: justify;
+                @include horizontal-padding($Spacing-1);
+                & > span {
+                  color: primary-color();
+                }
+              }
+              & > .Cover {
+                transition: all 0.4s ease-in-out;
+                @include size-inherit;
+                width: calc(100% - #{$Spacing-1 * 2});
+                color: transparent;
+                background-color: transparent;
+                backdrop-filter: none;
+                text-decoration: none;
+                @include d-flex--col--cen;
+                @include position-top;
+              }
+            }
+          }
+        }
+      }
+      & > :last-child,
+      & > :nth-child(5) {
+        display: none;
+      }
+      &[data-device="desktop"] {
+        & > .Blog {
+          &:hover {
+            box-shadow:
+              0px 5px 5px 1px primary-color(0.2),
+              2px 0px 5px 1px primary-color(0.3);
+            @include border-bot-radius($Size-5);
+            @include border-top-radius($Size-4);
+            overflow: hidden;
+            & > .Image {
+              & > .Image-Thumb {
+                scale: 1.2;
+              }
+              & > .Time {
+                transition: all 0.2s ease-in;
+                @include vertical-padding($Spacing-1);
+                translate: 0% 0%;
+                & > p {
+                  translate: 0%;
+                  transition:
+                    all 0.4s ease-out 0.2s,
+                    height 0s;
+                }
+              }
+            }
+            & > .Info {
+              & > .Title {
+                color: secondary-color();
+                text-shadow: $Size-1 $Size-2 $Spacing-1 primary-color(0.3);
+              }
+              & > .Detail {
+                & > .Author {
+                  color: primary-color();
+                }
+                & > .Content {
+                  & > .Cover {
+                    text-shadow: $Size-1 $Size-1 $Size-2 secondary-color();
+                    color: secondary-color();
+                    background-color: primary-counter-color(0.8);
+                    backdrop-filter: blur($Size-1);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      &[data-device="mobile"] {
+        & > .Blog {
+          box-shadow:
+            0px 2px 2px 0px primary-color(0.2),
+            1px 0px 2px 0px primary-color(0.3);
+          overflow: hidden;
+          & > .Image {
+            & > .Time {
+              @include vertical-padding($Spacing-1);
+              translate: 0% 0%;
+              & > p {
+                translate: 0%;
+                transition:
+                  all 0.4s ease-out 0.2s,
+                  height 0s;
+              }
+            }
+          }
+        }
+      }
+    }
+    & > .B__Container {
+      width: 100%;
+      aspect-ratio: 325/68;
+      overflow: hidden;
+      @include d-flex--row--f-str;
+      position: relative;
+      & > .Slider {
+        animation: shine 0.8s ease-in;
+        @include d-flex--row--f-str;
+        width: fit-content;
+        height: 100%;
+        transition: all 0.3s;
+        &.Active {
+          animation: blur 1s ease-in;
+        }
+        & > :nth-child(n) {
+          width: $Max-Screen-Container;
+          aspect-ratio: 325/68;
+          position: relative;
+          @include d-flex--col--cen;
+          & > .Image-Thumb {
+            @include size-inherit;
+            @include position-top;
+            & > img {
+              object-fit: cover;
+              object-position: top left;
+            }
+          }
+        }
+        @keyframes shine {
+          0% {
+            filter: brightness(10%) blur($Size-5);
+          }
+          30% {
+            filter: brightness(170%) blur(0);
+          }
+          100% {
+            filter: brightness(100%);
+          }
+        }
+        @keyframes blur {
+          0% {
+            filter: blur($Size-2);
+          }
+          70% {
+            filter: blur($Size-5);
+          }
+          100% {
+            filter: blur($Size-1);
+          }
+        }
+      }
+      & > .Dots {
+        @include position-bot();
+        width: 100%;
+        @include d-flex--row--cen;
+        margin-bottom: $Spacing-2;
+        gap: $Spacing-3;
+        & > .Dot {
+          height: $Size-5;
+          width: $Size-5;
+          border-radius: 50%;
+          border: $Size-1 solid quaternary-color();
+          background-color: primary-counter-color();
+          transition: all 0.3s;
+          &.Active {
+            background-color: secondary-color();
+          }
+        }
+      }
+    }
+  }
+  & > footer {
+    background-color: secondary-color();
+    @include d-flex--col--cen;
+    z-index: 0;
+    position: sticky;
+    bottom: $Size-7;
+    & > .Main {
+      @include d-flex--row--s-bet;
+      flex-wrap: wrap;
+      gap: $Spacing-4;
+      color: primary-counter-color();
+      @include vertical-padding($Spacing-3);
+      align-items: flex-start;
+      & > div {
+        img {
+          width: 100%;
+          object-fit: contain;
+        }
+        ul {
+          & > li {
+            list-style-type: none;
+          }
+        }
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+      }
+      & > :first-child {
+        @include d-flex--col--s-bet;
+        align-items: flex-start;
+        gap: $Spacing-2;
+        width: 50%;
+        & > img {
+          object-position: left;
+        }
+        & > ul {
+          & > li {
+            & > a {
+              @include d-flex--row--f-str;
+              align-items: flex-start;
+              text-align: left;
+              transition: all 0.2s ease-in-out;
+              &:hover {
+                color: quaternary-color();
+              }
+              &:first-child {
+                margin-bottom: $Spacing-2;
+              }
+              &:not(:first-child) {
+                margin-left: $Spacing-4;
+                &:not(:last-child) {
+                  margin-bottom: $Spacing-1;
+                }
+              }
+              & > :first-child {
+                width: $Size-6;
+                margin-right: $Spacing-1;
+                @include d-flex--row--f-str;
+              }
+              & > :last-child {
+                flex-grow: 1;
+                width: fit-content;
+              }
+            }
+          }
+        }
+        & > a {
+          position: absolute;
+          @include d-flex--row--f-end;
+          z-index: 100;
+          bottom: 0;
+          margin-bottom: $Spacing-2;
+          & > img {
+            object-position: left;
+            transition: all 0.2s ease-in-out;
+            &:hover {
+              scale: 1.1;
+            }
+          }
+        }
+      }
+      & > :nth-child(2) {
+        @include d-flex--row--f-str;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: $Spacing-2;
+        width: 41%;
+        & > :first-child {
+          width: 100%;
+        }
+        & > :nth-child(2) {
+          width: 50%;
+        }
+        & > :nth-child(3) {
+          object-position: center;
+          width: 35%;
+        }
+      }
+      & > :last-child {
+        // flex-grow: 1;
+        width: 100%;
+        @include d-flex--row--s-bet;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: $Spacing-3 0;
+        & > div {
+          width: max-content;
+
+          & > :first-child {
+            margin-bottom: $Spacing-2;
+          }
+          & > ul {
+            margin-left: $Spacing-1;
+            padding-right: $Spacing-3;
+            border-left: $Size-1 solid currentColor;
+            & > li {
+              padding-left: $Spacing-3;
+              width: fit-content;
+              border-bottom: $Size-1 dotted currentColor;
+              &:hover {
+                border-bottom: $Size-1 solid currentColor;
+                color: quaternary-color();
+              }
+            }
+            & > li:not(:last-child) {
+              margin-bottom: $Spacing-3;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: $Wide-Screen-Width) {
+    & > :nth-child(n) {
+      & > .Container {
+        max-width: $Wide-Screen-Container;
+      }
+    }
+    & > .Home {
+      & > a {
+        max-width: $Wide-Screen-Container;
+      }
+      & > .Introduction {
+        & > .Screen {
+          &:nth-child(1) {
+            & > .Container {
+              & > .Hands {
+                padding-left: 10%;
+              }
+            }
+            &.Active {
+              /// 2 in ////////////////////////////////////////////////////////////////////////////////////////////
+              & + .Screen {
+                & > .Container {
+                  & > .Wrapper {
+                    & > .Container {
+                      & > h1 {
+                        translate: calc((100vw - #{$Wide-Screen-Container}) / 2);
+                      }
+                    }
+                  }
+                }
+              }
+              /// 4 out ////////////////////////////////////////////////////////////////////////////////////////////
+              & ~ :last-child {
+                & > .Container {
+                  & > .Wrapper {
+                    & > .Container {
+                      & > h1 {
+                        translate: calc((100vw - #{$Wide-Screen-Container}) / 2);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            /// 1 in ////////////////////////////////////////////////////////////////////////////////////////////
+            &:has(~ :last-child.Active) {
+              & > .Container {
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((#{$Wide-Screen-Container} - 100vw) / 2);
+                    }
+                  }
+                }
+              }
+            }
+            ///  1 out ////////////////////////////////////////////////////////////////////////////////////////////
+            &:has(+ .Active) {
+              & > .Container {
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((#{$Wide-Screen-Container} - 100vw) / 2);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          &:nth-child(2) {
+            & > .Container {
+              & > .Hands {
+                padding-right: 10%;
+              }
+            }
+            /// 3 in ////////////////////////////////////////////////////////////////////////////////////////////
+            &.Active + .Screen {
+              & > .Container {
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((#{$Wide-Screen-Container} - 100vw) / 2);
+                    }
+                  }
+                }
+              }
+            }
+            /// 2 out ////////////////////////////////////////////////////////////////////////////////////////////
+            &:has(+ .Active) {
+              & > .Container {
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((100vw - #{$Wide-Screen-Container}) / 2);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          &:nth-child(3) {
+            & > .Container {
+              & > .Hands {
+                & > :first-child {
+                  left: 10%;
+                }
+                & > :last-child {
+                  left: 17%;
+                }
+              }
+            }
+            //////////////////// 4 in //////////////////////////////////////////////
+            &.Active + .Screen {
+              & > .Container {
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((100vw - #{$Wide-Screen-Container}) / 2);
+                    }
+                  }
+                }
+              }
+            }
+            ///////////////////// 3 out //////////////////////////////////////////////
+            &:has(+ .Active) {
+              & > .Container {
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: calc((#{$Wide-Screen-Container} - 100vw) / 2);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          &:nth-child(4) {
+            & > .Container {
+              .Hands {
+                & > img:nth-child(2n) {
+                  left: 10%;
+                }
+                & > img:nth-child(2n-1) {
+                  right: 10%;
+                }
+              }
+            }
+          }
+
+          & > .Container {
+            & > .Hands {
+              max-width: $Wide-Screen-Container;
+            }
+            & > .Wrapper > .Container {
+              max-width: $Wide-Screen-Container;
+              & > h1 {
+                font-size: 3.8em;
+                &::before {
+                  width: calc((100vw - $Wide-Screen-Container) / 2);
+                }
+              }
+              & > div > div > div {
+                width: calc(100% + (100vw - $Wide-Screen-Container) / 2);
+              }
+            }
+          }
+        }
+      }
+      & > .RMA__Container {
+        height: $Size-12 + $Size-10;
+        & > .Content {
+          width: $Size-11 - $Size-6;
+        }
+      }
+      & > .MS__Container {
+        & > .Books {
+          height: ($Wide-Screen-Container + $Spacing-1) / 2;
+        }
+        & > .Line {
+          & > .Frame {
+            width: 40%;
+            &.History {
+              padding-right: 10%;
+            }
+            &.Plan {
+              padding-left: 10%;
+            }
+          }
+        }
+      }
+      & > .P__Container {
+        & > .Categories {
+          & > .Container {
+            & > .Products {
+              & > .Container {
+                & > .Product {
+                  width: $Size-10 + $Size-8;
+                }
+              }
+            }
+          }
+        }
+      }
+      & > .S__Container {
+        @include d-grid--col(3, auto);
+        row-gap: $Spacing-2;
+        & > :last-child,
+        & > :nth-child(5) {
+          display: flex;
+        }
+      }
+      & > .B__Container {
+        & > .Slider {
+          & > :nth-child(n) {
+            width: $Wide-Screen-Container;
+          }
+        }
+      }
+    }
+    & > footer {
+      & > .Main {
+        & > :nth-child(2) {
+          width: 43%;
+          & > :last-child {
+            object-position: left;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: $Broad-Screen-Width) {
+    & > :nth-child(n) {
+      & > .Container {
+        max-width: calc(100% - #{$Spacing-3 * 2});
+      }
+    }
+    & > .Home {
+      & > a {
+        max-width: 100%;
+        @include horizontal-padding($Spacing-3);
+      }
+      & > .Introduction {
+        height: unset;
+        aspect-ratio: 325/178;
+        & > .Screen {
+          &:nth-child(1) {
+            & > .Container {
+              & > .Hands {
+                padding-left: 15%;
+              }
+              & > .Background > :last-child {
+                clip-path: ellipse(200% 900% at 0% -825%);
+                & > img {
+                  height: 80%;
+                  width: 80%;
+                }
+              }
+            }
+            &.Active {
+              & + .Screen > .Container > .Wrapper > .Container > h1 {
+                translate: 0;
+              }
+              & ~ :last-child {
+                & > .Container {
+                  & > .Wrapper {
+                    & > .Container {
+                      & > h1 {
+                        translate: 0;
+                      }
+                    }
+                  }
+                  & > .Object {
+                    right: -50vw;
+                  }
+                }
+              }
+            }
+            &:has(~ :last-child.Active) {
+              & > .Container {
+                & > .Wrapper {
+                  & > .Container {
+                    & > h1 {
+                      translate: 0;
+                    }
+                  }
+                }
+              }
+            }
+            &:has(+ .Active) {
+              & > .Container > .Wrapper > .Container > h1 {
+                translate: 0;
+              }
+            }
+          }
+          &:nth-child(2) {
+            & > .Container {
+              & > .Hands {
+                padding-right: 15%;
+              }
+              & > .Background > :last-child {
+                clip-path: ellipse(200% 900% at 100% -825%);
+              }
+            }
+            &:has(+ .Active) {
+              & > .Container > .Wrapper > .Container > h1 {
+                translate: 0;
+              }
+            }
+            &.Active + .Screen > .Container > .Wrapper > .Container > h1 {
+              translate: 0;
+            }
+          }
+
+          &:nth-child(3) {
+            & > .Container {
+              & > .Hands {
+                & > :first-child {
+                  left: 15%;
+                }
+                & > :last-child {
+                  left: 22%;
+                }
+              }
+              & > .Background > :first-child {
+                clip-path: ellipse(70% 75% at 100% 12.5%);
+              }
+            }
+            &:has(+ .Active) {
+              & > .Container > .Wrapper > .Container > h1 {
+                translate: 0;
+              }
+            }
+            &.Active + .Screen > .Container > .Wrapper > .Container > h1 {
+              translate: 0;
+            }
+          }
+          &:nth-child(4) {
+            & > .Container {
+              .Hands {
+                & > img:nth-child(2n) {
+                  left: 15%;
+                }
+                & > img:nth-child(2n-1) {
+                  right: 15%;
+                }
+              }
+              & > .Background {
+                & > :first-child {
+                  height: 125%;
+                }
+                & > :last-child {
+                  clip-path: ellipse(70% 150% at 100% -75%);
+                }
+              }
+              & > .Object {
+                right: 10vw;
+                bottom: 50%;
+                & > :first-child {
+                  width: 40vw;
+                }
+                & > :nth-child(2) {
+                  width: 14vw;
+                  left: 1.5vw;
+                  bottom: 3.5vw;
+                }
+                & > :nth-child(3) {
+                  width: 14.2vw;
+                  left: 15vw;
+                  bottom: 3.5vw;
+                }
+                & > :nth-child(4) {
+                  width: 14.5vw;
+                  right: -1vw;
+                  bottom: 3vw;
+                }
+                & > :nth-child(5) {
+                  width: 7.5vw;
+                  left: 21vw;
+                  bottom: 3vw;
+                }
+              }
+            }
+          }
+          & > .Container {
+            & > .Hands {
+              & > img {
+                height: calc(80% - 3.5em);
+                width: unset;
+              }
+            }
+            & > .Wrapper > .Container {
+              max-width: 100vw;
+              margin-bottom: 10%;
+              font-size: 1.5vw;
+              & > h1 {
+                font-size: 3.5em;
+                &::before {
+                  width: 0px;
+                }
+              }
+              & > div > div > div {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+      & > .RMA__Container {
+        height: $Size-12 + $Size-10;
+        & > .Content {
+          width: $Size-11;
+        }
+      }
+      & > .MS__Container {
+        & > .Books {
+          height: calc(50vw - #{$Spacing-2 + 2px});
+          & > .Book {
+            & > .Pages > .Page {
+              & > .Container.Cover > .Title {
+                margin-bottom: 2vw;
+                & > h1 {
+                  text-align: right;
+                  padding-left: 7vw;
+                }
+                & > h3 {
+                  padding-left: 7vw;
+                }
+              }
+              & > .Backface {
+                &.Cover {
+                  & > .Title {
+                    margin-bottom: 2vw;
+                    & > h1 {
+                      padding-right: 7vw;
+                    }
+                    & > h3 {
+                      padding-right: 7vw;
+                    }
+                  }
+                }
+                & > .Date {
+                  padding: 1vw;
+                  font-size: 2vw;
+                }
+              }
+              & > .Cover > .Title {
+                backdrop-filter: blur(0.1vw);
+                & > h1 {
+                  font-size: 4.5vw;
+                  padding: 2vw;
+                }
+                & > h3 {
+                  font-size: 2.8vw;
+                  padding: 1vw;
+                }
+              }
+            }
+          }
+        }
+        &[data-device="desktop"] {
+          & > .Line {
+            &:has(.Point:not(.Now):hover) {
+              .Point {
+                &.Now {
+                  & > .Time {
+                    opacity: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      & > .P__Container {
+        & > .Category__Presentation {
+          font-size: 0.8rem;
+        }
+
+        & > .Product__Presentation {
+          & > .Display {
+            font-size: 0.9rem;
+            width: $Size-10 + $Size-8;
+          }
+        }
+      }
+      & > .S__Container {
+        & > .Blog {
+          @include border-top-radius($Size-3);
+        }
+      }
+      & > .B__Container {
+        overflow: hidden;
+        & > .Slider {
+          & > :nth-child(n) {
+            width: calc(100vw - #{$Spacing-3 * 2});
+          }
+        }
+        & > .Dots {
+          & > .Dot {
+            height: $Size-4 + $Size-2;
+            width: $Size-4 + $Size-2;
+          }
+        }
+      }
+    }
+    & > footer {
+      & > .Main {
+        & > :first-child {
+          width: fit-content;
+        }
+        & > :nth-child(2) {
+          width: 231.69px;
+          justify-self: flex-end;
+          & > :nth-child(2) {
+            width: 100%;
+          }
+          & > :last-child {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 1100px) {
+    & > .Home {
+      & > .RMA__Container {
+        aspect-ratio: 1.828;
+        height: unset;
+      }
+    }
+  }
+  @media (max-width: 880px) {
+    & > .Home {
+      & > a {
+        margin-top: $Spacing-3;
+      }
+      & > .RMA__Container {
+        flex-flow: column;
+        aspect-ratio: unset;
+        height: fit-content;
+        & > .Map {
+          width: 100%;
+          border-bottom-left-radius: 0;
+          border-top-right-radius: $Size-5;
+        }
+        & > .Content {
+          width: 100%;
+          height: fit-content;
+          font-size: 2vw;
+          & > .Container {
+            height: $Size-10 + $Size-6;
+
+            & > .List {
+              flex-flow: row;
+              width: fit-content;
+              height: 100%;
+              animation: listRollRight 15s ease infinite;
+              @keyframes listRollRight {
+                0% {
+                  translate: 0% 0%;
+                }
+                100% {
+                  translate: -100% 0%;
+                }
+              }
+              & > .Pseudo {
+                height: 100%;
+                width: fit-content;
+                bottom: 0;
+                left: 100%;
+                @include d-flex--row--f-str;
+              }
+              .Wrapper {
+                width: $Size-11;
+                height: 100%;
+                margin-bottom: 0;
+                margin-left: $Spacing-1;
+                & > .Box {
+                  flex-flow: row;
+                  & > .Info {
+                    padding: $Spacing-1/2;
+                    & > .Primary {
+                      margin-bottom: $Spacing-1/2;
+                    }
+                    & > .Secondary {
+                      & > ul > li > .Line {
+                        gap: $Spacing-1;
+                        padding-left: $Spacing-1;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          & > .Bot-Button-Container {
+            width: 50%;
+            left: 25%;
+            & > :nth-child(n) {
+              margin-bottom: $Spacing-1;
+              height: $Size-6 + $Size-3;
+            }
+          }
+          &:has(> .Container > .List > .Wrapper > .Box.Active) > .Container > .List {
+            width: 100%;
+            & > .Wrapper {
+              width: 0px;
+              margin-left: 0;
+              &:has(> .Active) {
+                border-top-right-radius: 0;
+                border-bottom-left-radius: $Size-5;
+                width: 100%;
+              }
+              & > .Box.Active {
+                @include d-flex--row--f-str;
+                align-items: flex-start;
+                & > .Image-Thumb {
+                  width: 40%;
+                  height: 100%;
+                }
+                & > .Info {
+                  padding: 0;
+                  width: 60%;
+                  padding-top: $Spacing-1;
+                  & > .Primary {
+                    margin-bottom: $Spacing-1;
+                  }
+                  & > .Secondary {
+                    & > .Line {
+                      margin-bottom: 0;
+                      & > .Direct-Text {
+                        & > span {
+                          display: inline;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      & > .MS__Container {
+        gap: 3vw;
+        & > .Books {
+          &::before {
+            width: 0.5vw;
+          }
+          height: calc(50vw - #{$Spacing-3});
+          border-bottom: 0.7vw solid currentColor;
+          border-top: 0.1vw solid currentColor;
+          border-left: 0.5vw solid currentColor;
+          border-right: 0.5vw solid currentColor;
+          & > .Book {
+            & > .Pages {
+              & > .Page {
+                & > div {
+                  & > .Button {
+                    font-size: 3vw;
+                    padding: 1vw;
+                  }
+                }
+              }
+            }
+            &.History {
+              border-bottom: 0.5vw solid #c1bdba;
+              border-left: 0.5vw solid #c1bdba;
+              & > .Pages {
+                & > .Page.Current {
+                  & > .Container {
+                    & > .Button:hover {
+                      font-size: 4vw;
+                      & > :first-child {
+                        translate: -3.5vw;
+                      }
+                    }
+                  }
+                  & + .Page > .Backface > .Button:hover {
+                    font-size: 4vw;
+                    & > :first-child {
+                      translate: 3.5vw;
+                    }
+                  }
+                }
+              }
+            }
+            &.Plan {
+              border-bottom: 0.5vw solid #c1bdba;
+              border-right: 0.5vw solid #c1bdba;
+              & > .Pages {
+                & > .Page.Current {
+                  & > .Container {
+                    & > .Button:hover {
+                      font-size: 4vw;
+                      & > :first-child {
+                        translate: 3.5vw;
+                      }
+                    }
+                  }
+                  & + .Page > .Backface > .Button:hover {
+                    font-size: 4vw;
+                    & > :first-child {
+                      translate: -3.5vw;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        & > .Line {
+          height: 12vw;
+          & > .Frame.History {
+            & > :first-child > .Info {
+              font-size: 2.5vw;
+            }
+            .Point {
+              & > .Dot {
+                &::before {
+                  border: 0.4vw solid currentColor;
+                }
+              }
+            }
+          }
+          .Point {
+            &.Active {
+              & > .Info {
+                margin-bottom: 2vw;
+              }
+            }
+            &.Now {
+              & > .Dot {
+                &::after {
+                  border: solid 0.4vw secondary-color();
+                }
+              }
+            }
+            & > .Info {
+              font-size: 2vw;
+              margin-bottom: 1vw;
+            }
+            & > .Time {
+              font-size: 1.4vw;
+              margin-top: 1vw;
+            }
+            & > .Dot {
+              &::after {
+                height: 0.4vw;
+                width: 0.4vw;
+              }
+              &::before {
+                height: 0.8vw;
+                width: 0.8vw;
+              }
+            }
+          }
+        }
+      }
+
+      & > .P__Container {
+        height: $Size-11 + $Size-9;
+        & > .Category__Presentation {
+          align-self: center;
+          backdrop-filter: blur(1vw);
+        }
+        & > .Categories {
+          & > .Container {
+            & > .Products {
+              & > .Container {
+                & > .Product {
+                  width: calc(20vw - #{$Spacing-2 * 2 / 5});
+                }
+              }
+            }
+          }
+        }
+        & > .Product__Presentation {
+          margin-top: $Spacing-5;
+        }
+        &[data-device="desktop"] {
+          & > .Category__Presentation {
+            &:hover {
+              & > p {
+                height: 10vw;
+              }
+            }
+          }
+        }
+        &[data-device="mobile"] {
+          & > .Category__Presentation[data-hover="true"] {
+            & > p {
+              height: 10vw;
+            }
+          }
+        }
+      }
+      & > .S__Container {
+        & > .Blog {
+          width: $Size-10 + $Size-8;
+          @include border-top-radius(1vw);
+        }
+      }
+    }
+    & > footer {
+      & > .Main {
+        justify-content: center;
+        & > :first-child {
+          width: 100%;
+          align-items: center;
+          & > img {
+            object-position: center;
+          }
+          & > ul {
+            width: 590px;
+          }
+          & > a {
+            margin-right: 43%;
+            margin-bottom: $Spacing-5;
+          }
+        }
+        & > :nth-child(2) {
+          width: 590px;
+          flex-flow: row;
+          flex-wrap: wrap;
+          gap: 0;
+          & > :nth-child(2) {
+            object-position: top left;
+            margin-left: $Spacing-4;
+            width: calc(62% - #{$Spacing-1 * 1.5 + $Spacing-4});
+          }
+          & > :last-child {
+            object-position: left;
+            width: 38%;
+          }
+        }
+        & > :last-child {
+          width: 590px;
+          row-gap: $Spacing-4;
+          @include d-grid--col(2, auto);
+          & > :nth-child(2) {
+            grid-column: 1 / span 1;
+          }
+          & > :nth-child(3) {
+            grid-column: 2 / span 1;
+            grid-row: 1 / span 1;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: $Medium-Screen-Width) {
+    & > .Home {
+      padding-bottom: 0;
+      & > a {
+        font-size: 1.1rem;
+        & > h1 {
+          font-size: 1.2rem;
+        }
+        & > a {
+          font-size: 1.1rem;
+          & > h1 {
+            font-size: 1.2rem;
+          }
+        }
+      }
+      & > .P__Container {
+        height: $Size-11 + $Size-7;
+        & > .Categories {
+          & > .Container {
+            & > .Products {
+              & > .Container {
+                & > .Product {
+                  translate: 0%;
+                  &::before {
+                    margin-top: $Spacing-3 + $Spacing-1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      & > .S__Container {
+        & > .Blog {
+          width: $Size-10 + $Size-6;
+          margin-bottom: 1vw;
+          & > .Info {
+            & > .Title {
+              font-size: 0.7rem;
+            }
+            & > .Detail {
+              & > .Author {
+                font-size: 0.9rem;
+              }
+              & > .Content {
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+      }
+      & > .B__Container {
+        max-width: 100vw;
+        & > .Slider {
+          & > :nth-child(n) {
+            width: 100vw;
+          }
+        }
+        & > .Dots {
+          & > .Dot {
+            height: $Size-4;
+            width: $Size-4;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 660px) {
+    & > .Home {
+      & > .P__Container {
+        height: $Size-11 + $Size-5;
+        & > .Categories {
+          & > .Container {
+            & > .Products {
+              & > .Container {
+                & > .Product {
+                  translate: 0%;
+                  &::before {
+                    margin-top: $Spacing-3 + $Spacing-1;
+                  }
+                  &.Active {
+                    & > .Image-Thumb {
+                      transform: scale(1.4);
+                    }
+                  }
+                  &.Active + div {
+                    & > .Image-Thumb {
+                      transform: scale(1.1) translateX(8%) translateY(-5%);
+                    }
+                  }
+                  &:has(+ .Active) {
+                    & > .Image-Thumb {
+                      transform: scale(1.1) translateX(-8%) translateY(-5%);
+                    }
+                  }
+                  &.Active + div + div {
+                    & > .Image-Thumb {
+                      transform: scale(0.9) translateX(-5%) translateY(-10%);
+                    }
+                  }
+                  &:has(+ div + .Active) {
+                    & > .Image-Thumb {
+                      transform: scale(0.9) translateX(5%) translateY(-10%);
+                    }
+                  }
+                  & > .Image-Thumb {
+                    transform: scale(0.9) translateY(-10%);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      & > .S__Container {
+        & > .Blog {
+          width: $Size-9 + $Size-7;
+          & > .Image {
+            font-size: 0.6rem;
+          }
+          & > .Info {
+            & > .Title {
+              font-size: 0.65rem;
+            }
+            & > .Detail {
+              & > .Author {
+                margin-bottom: 0;
+                & > :first-child {
+                  margin-right: $Spacing-1;
+                }
+              }
+              & > .Content {
+                font-size: 0.8rem;
+              }
+            }
+          }
+        }
+      }
+    }
+    & > footer {
+      font-size: 0.8rem;
+      h2 {
+        font-size: 1rem;
+      }
+      & > .Main {
+        gap: $Spacing-2;
+        & > :first-child {
+          gap: $Spacing-2;
+          & > img {
+            height: $Size-7 + $Size-4;
+          }
+          & > ul {
+            width: 100%;
+            padding-left: $Spacing-2;
+            & > li {
+              & > a {
+                &:first-child {
+                  margin-bottom: $Spacing-1;
+                }
+                &:not(:first-child) {
+                  margin-bottom: 0;
+                }
+              }
+            }
+          }
+          & > a {
+            left: $Spacing-3;
+            margin-bottom: $Spacing-5 - $Spacing-2;
+            & > img {
+              height: $Size-7 + $Size-5;
+            }
+          }
+        }
+        & > :nth-child(2) {
+          width: 100%;
+          padding-left: $Spacing-2;
+          & > :nth-child(2) {
+            width: calc(50% - #{$Spacing-3});
+            height: $Size-7;
+            object-position: left;
+            margin-left: $Spacing-4;
+          }
+          & > :last-child {
+            height: $Size-7;
+            object-position: left;
+          }
+        }
+        & > :last-child {
+          @include d-grid--col(2, calc(50% - $Spacing-3 / 2));
+          justify-content: flex-start;
+          width: 100%;
+          gap: $Spacing-3;
+          padding-left: $Spacing-2;
+          & > div {
+            & > :first-child {
+              margin-bottom: $Spacing-1;
+            }
+            & > ul {
+              & > li:not(:last-child) {
+                margin-bottom: $Spacing-2;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: $Narrow-Screen-Width) {
+    & > .Home {
+      & > a {
+        & > h1 {
+          font-size: 1rem;
+        }
+      }
+      & > .RMA__Container {
+        & > .Content {
+          font-size: 1.8vw;
+          & > .Container {
+            height: 30vw;
+            & > .List {
+              .Wrapper {
+                width: $Size-10;
+                & > .Box {
+                  & > .Info {
+                    padding: 1vw;
+                    & > .Primary {
+                      margin-bottom: 1vw;
+                    }
+                    & > .Secondary {
+                      & > ul > li > .Line {
+                        padding-left: 1vw;
+                        gap: 1vw;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          &.Content:has(> .Container > .List > .Wrapper > .Box.Active) {
+            & > .Container {
+              & > .List {
+                & > .Wrapper {
+                  & > .Box {
+                    &.Active {
+                      & > .Info {
+                        padding-top: 1vw;
+                        & > .Primary {
+                          margin-bottom: 1vw;
+                        }
+                        & > .Secondary {
+                          & > .Article {
+                            margin-top: 1vw;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          & > .Button {
+            padding: 2vw;
+          }
+          & > .Bot-Button-Container {
+            width: 100%;
+            left: 0;
+            @include horizontal-padding(2vw);
+            & > :nth-child(n) {
+              height: 4.5vw;
+              margin-bottom: 1vw;
+            }
+            & > div:first-child {
+              @include border-left-radius(3vw);
+            }
+            & > div:last-child {
+              @include border-right-radius(3vw);
+            }
+          }
+        }
+      }
+      & > .P__Container {
+        height: $Size-10 + $Size-8;
+        & > .Category__Presentation {
+          font-size: 0.7rem;
+        }
+        & > .Product__Presentation {
+          margin-top: $Spacing-4;
+          & > .Button {
+            font-size: 2rem;
+          }
+          & > .Display {
+            font-size: 0.7rem;
+            width: 50vw;
+            & > .Presentation {
+              & > div {
+                & .Price {
+                  margin-top: $Spacing-1;
+                }
+              }
+            }
+          }
+        }
+      }
+      & > .S__Container {
+        @include d-grid--col(2, calc(50% - #{$Spacing-2}));
+        & > .Blog {
+          width: 100%;
+          &:hover {
+            & > .Image {
+              & > .Time {
+                @include vertical-padding(#{$Spacing-1 / 2});
+              }
+            }
+          }
+          & > .Info {
+            & > .Title {
+              font-size: 0.6rem;
+            }
+            & > .Detail {
+              & > .Author {
+                font-size: 0.8rem;
+              }
+              & > .Content {
+                font-size: 0.7rem;
+              }
+            }
+          }
+        }
+        & > :last-child,
+        & > :nth-child(5) {
+          display: none;
+        }
+      }
+    }
+    & > footer {
+      & > .Main {
+        & > :first-child {
+          gap: $Spacing-2;
+          & > ul {
+            padding-left: 0;
+            & > li {
+              & > a {
+                &:first-child {
+                  margin-bottom: $Spacing-1;
+                }
+                &:not(:first-child) {
+                  margin-left: $Spacing-2;
+                }
+                &:last-child {
+                  & > :last-child {
+                    @include d-flex--row--f-str;
+                    flex-wrap: wrap;
+                  }
+                }
+                & > :first-child {
+                  margin-right: $Spacing-2;
+                  width: $Size-3 + $Size-2;
+                }
+              }
+            }
+          }
+          & > a {
+            & > img {
+              height: $Size-7;
+            }
+          }
+        }
+        & > :nth-child(2) {
+          padding-left: 0;
+          & > :nth-child(2) {
+            width: 70%;
+            margin-left: $Spacing-2;
+          }
+          & > :last-child {
+            object-position: right;
+            width: 25%;
+          }
+        }
+        & > :last-child {
+          @include d-grid--col(2, calc(50% - $Spacing-3 / 2));
+          justify-content: flex-start;
+          gap: $Spacing-3;
+          padding-left: 0;
+          & > div {
+            width: fit-content;
+            & > :first-child {
+              margin-bottom: $Spacing-1;
+            }
+            & > ul {
+              margin-left: 0;
+              padding-right: 0;
+              & > li {
+                word-wrap: break-word;
+                white-space: break-spaces;
+                padding-left: $Spacing-1;
+                display: block;
+                &:not(:last-child) {
+                  margin-bottom: $Spacing-1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 408px) {
+    & > .Home {
+      & > .P__Container {
+        height: 50vw;
+        & > .Category__Presentation {
+          font-size: 2.2vw;
+        }
+        & > .Product__Presentation {
+          margin-top: 6vw;
+          & > .Button {
+            font-size: 6vw;
+          }
+          & > .Display {
+            font-size: 2vw;
+            width: 30vw;
+            & > .Presentation {
+              & > div {
+                & > .Price {
+                  margin-top: $Spacing-1 / 2;
+                }
+              }
+            }
+          }
+        }
+        & > .Categories {
+          & > .Container {
+            & > .Products {
+              & > .Container {
+                & > .Product {
+                  &::before {
+                    height: $Size-1 * 1.5;
+                    margin-top: $Spacing-2;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    & > footer {
+      padding-bottom: $Spacing-3 + $Spacing-1;
+    }
+  }
+  @media (max-width: 350px) {
+    & > .Home {
+      & > .RMA__Container {
+        & > .Map {
+          display: none;
+        }
+        & > .Content {
+          & > .Container {
+            height: $Size-11;
+            & > .List {
+            }
+          }
+          & > .Bot-Button-Container {
+          }
+          &:has(> .Container > .List > .Wrapper > .Box.Active) > .Container > .List > .Wrapper {
+            &:has(> .Active) {
+              border-radius: 0;
+            }
+            & > .Box.Active {
+              flex-flow: column;
+              & > .Image-Thumb {
+                width: 100%;
+              }
+              & > .Info {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 305px) {
+    padding-bottom: 0;
+
+    & > :nth-child(n) {
+      & > .Container {
+        max-width: calc(90vw);
+      }
+    }
+    & > .Home {
+      & > .S__Container {
+        @include d-grid--col(2, calc(50% - #{$Spacing-1}));
+        & > .Blog {
+          & > .Image {
+            font-size: 3.5vw;
+          }
+          & > .Info {
+            & > .Title {
+              font-size: 3.2vw;
+            }
+            & > .Detail {
+              & > .Author {
+                font-size: 3.5vw;
+              }
+              & > .Content {
+                font-size: 3.5vw;
+              }
+            }
+          }
+        }
+      }
+    }
+    & > footer {
+      bottom: 0;
+      // padding-bottom: 15vw;
+      & > .Main {
+        gap: 5vw;
+        padding-top: 0;
+        padding-bottom: 4vw;
+        & > :first-child {
+          position: relative;
+          translate: 0 30vw;
+          gap: 0;
+          & > a {
+            left: 0;
+            bottom: 100%;
+            margin-right: 0;
+            width: 100%;
+            margin-bottom: 0;
+            & > img {
+              height: 10vw;
+              width: 100%;
+              object-position: left;
+            }
+          }
+          & > ul {
+            & > li {
+              font-size: 4vw;
+              & > a {
+                &:first-child {
+                  margin-bottom: 2vw;
+                  & > :first-child {
+                    width: 6vw;
+                    margin-right: 1vw;
+                  }
+                }
+                &:not(:first-child) {
+                  margin-left: 7vw;
+                  & > :first-child {
+                    width: 6vw;
+                    margin-right: 1vw;
+                  }
+                  &:not(:last-child) {
+                    margin-bottom: 1vw;
+                  }
+                }
+              }
+            }
+          }
+          & > img {
+            height: 20vw;
+          }
+        }
+        & > :nth-child(2) {
+          padding-left: 0;
+          flex-flow: column;
+
+          translate: 0% calc(100% + 5vw);
+          z-index: -1;
+          & > :first-child {
+            font-size: 4vw;
+          }
+          & > :nth-child(2) {
+            width: calc(50% - 9vw);
+            height: 12vw;
+            margin-left: 7vw;
+          }
+          & > :last-child {
+            height: 8vw;
+            width: calc(50% - 9vw);
+            margin-left: 7vw;
+            object-position: left;
+          }
+        }
+        & > :last-child {
+          font-size: 3vw;
+          row-gap: 5vw;
+          column-gap: 10vw;
+          & > div {
+            &:first-child {
+              grid-column: 2 / span 1;
+            }
+            &:nth-child(2) {
+              grid-column: 2 / span 1;
+            }
+            &:nth-child(3) {
+              grid-column: 2 / span 1;
+            }
+            &:last-child {
+              grid-row: 2 / span 2;
+            }
+            & > :first-child {
+              font-size: 4vw;
+              margin-bottom: 1vw;
+            }
+            & > ul {
+              margin-left: 7vw;
+              & > li {
+                padding-left: 2vw;
+                &:not(:last-child) {
+                  margin-bottom: 2vw;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: $Tiny-Screen-Width) {
+    & > .Home {
+      & > a {
+        font-size: 5vw;
+        gap: 2vw;
+        @include horizontal-padding(5vw);
+        & > h1 {
+          font-size: 5vw;
+        }
+      }
+    }
+  }
+
+  .Loading-Screen {
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    gap: calc(#{$Spacing-5} + 2vmin);
+    background-color: primary-color();
+    @include d-flex--col--cen;
+    color: primary-counter-color();
+    & > .Logo {
+      width: 30vmin;
+      height: 30vmin;
+      @include d-flex--col--cen;
+      position: relative;
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        border-radius: 100%;
+        z-index: 101;
+        box-shadow: 0 0 2vmin 2vmin primary-color();
+      }
+
+      &::before {
+        width: 100%;
+        height: 100%;
+        background-color: primary-counter-color();
+      }
+
+      &::after {
+        width: 90%;
+        height: 90%;
+        background-color: primary-color();
+        // animation: circle-size 0.8s linear infinite alternate;
+      }
+
+      & > .Shadow {
+        filter: blur($Size-2);
+        width: 105%;
+        height: 105%;
+        border-radius: 100%;
+        position: absolute;
+        background-color: primary-counter-color();
+        z-index: 101;
+        box-shadow:
+          0px 0px 15px 1px primary-counter-color() inset,
+          -21px -25px 20px 3px secondary-color() inset,
+          20px 5px 10px 3px secondary-counter-color() inset,
+          0px 0px 10px 3px tertiary-color(),
+          2px -5px 5px 3px secondary-color(),
+          10px 5px 10px 3px secondary-counter-color(),
+          5px -7px 25px 3px tertiary-color(),
+          4px -5px 20px 5px quaternary-color(),
+          0px 0px 30px 5px primary-counter-color();
+
+        animation: shadow-rotate 3s linear infinite;
+        transform-origin: center;
+      }
+
+      @keyframes shadow-rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      & > img {
+        @include size-inherit;
+        z-index: 103;
+      }
+    }
+    & > h1 {
+      position: relative;
+      font-style: italic;
+      font-weight: lighter;
+      & > .Farm {
+        font-weight: bold;
+        animation: farm-glow 1.5s ease-in-out infinite alternate;
+        @keyframes farm-glow {
+          from {
+            text-shadow:
+              0 0 10px #fff,
+              0 0 20px #fff,
+              0 0 30px #fff,
+              0 0 40px #b6ff00,
+              0 0 70px #b6ff00,
+              0 0 80px #b6ff00,
+              0 0 100px #b6ff00,
+              0 0 150px #b6ff00;
+          }
+          to {
+            text-shadow:
+              0 0 5px #fff,
+              0 0 10px #fff,
+              0 0 15px #fff,
+              0 0 20px #b6ff00,
+              0 0 35px #b6ff00,
+              0 0 40px #b6ff00,
+              0 0 50px #b6ff00,
+              0 0 75px #b6ff00;
+          }
+        }
+      }
+      & > .Cup {
+        font-weight: bold;
+
+        animation: cup-glow 1.5s ease-in-out infinite alternate;
+        @keyframes cup-glow {
+          from {
+            text-shadow:
+              0 0 10px #fff,
+              0 0 20px #fff,
+              0 0 30px #fff,
+              0 0 40px tertiary-color(),
+              0 0 70px tertiary-color(),
+              0 0 80px tertiary-color(),
+              0 0 100px tertiary-color(),
+              0 0 150px tertiary-color();
+          }
+          to {
+            text-shadow:
+              0 0 5px #fff,
+              0 0 10px #fff,
+              0 0 15px #fff,
+              0 0 20px tertiary-color(),
+              0 0 35px tertiary-color(),
+              0 0 40px tertiary-color(),
+              0 0 50px tertiary-color(),
+              0 0 75px tertiary-color();
+          }
+        }
+      }
+    }
+  }
+  .Link-As-Text {
+    text-decoration: none;
+    border-bottom: $Size-1 dotted currentColor;
+    color: inherit;
+    font-weight: bold;
+  }
+  .Image-Thumb {
+    @include d-flex--col--cen;
+    position: relative;
+    & > img {
+      @include size-inherit();
+    }
+  }
+  .Loading-Indicator {
+    @include size-inherit;
+    @include position-top;
+    @include d-flex--col--cen;
+    color: secondary-color();
+    font-size: 3em;
+  }
+  .Loading-Skeleton {
+    @include size-inherit;
+    @include position-top;
+    background-color: #ccc;
+    &::after {
+      width: 100%;
+      height: 150%;
+      @include position-top;
+      content: "";
+      background-image: linear-gradient(90deg, rgba(#ccc, 0), rgba(#fff, 0.3), rgba(#ccc, 0));
+      background-size: 10% 100%;
+      background-repeat: no-repeat;
+      background-position: left 0 top 0;
+      rotate: 35deg;
+      transform-origin: top left;
+      translate: 0% -10%;
+      animation: skeletonShine 1s ease-out infinite;
+      animation-delay: inherit;
+    }
+    @keyframes skeletonShine {
+      to {
+        translate: 150% -10%;
+      }
+    }
+  }
+
+  & > .Copyright {
+    &.Active {
+      background-color: quaternary-color();
+      height: $Size-7;
+      transition:
+        all 0.2s ease-in-out 0.2s,
+        height 0s;
+    }
+    transition:
+      all 0.3s ease-in-out,
+      height 0.4s ease-in-out 0.2s;
+    background-color: primary-color();
+    width: 100%;
+    @include d-flex--col--cen;
+    @include vertical-padding($Spacing-1);
+    position: fixed;
+    bottom: 0;
+    z-index: 99;
+    height: $Size-6;
+    & > .Container {
+      width: 100%;
+      max-width: $Max-Screen-Container;
+      @include d-flex--row--s-ard;
+      color: primary-counter-color();
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: $Medium-Screen-Width) {
+      height: max-content;
+      &.Active {
+        height: max-content;
+      }
+      & > .Container {
+        flex-flow: column;
+      }
+    }
+    @media (max-width: $Narrow-Screen-Width) {
+      & > .Container {
+        & > :first-child {
+          @include horizontal-padding($Spacing-2);
+        }
+      }
+    }
+    @media (max-width: 408px) {
+      & > .Container {
+        & > :first-child {
+          @include d-flex--col--cen;
+        }
+      }
+    }
+
+    @media (max-width: 305px) {
+      height: fit-content;
+      @include vertical-padding(2vw);
+      &.Active {
+        height: fit-content;
+      }
+      & > .Container {
+        font-size: 3.5vw;
+        .Link-As-Text {
+          border-bottom: 0.5vw dotted currentColor;
+        }
+      }
+    }
+  }
+}

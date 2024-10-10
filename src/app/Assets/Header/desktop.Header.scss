@@ -1,0 +1,106 @@
+@import "../declaration.scss";
+
+body {
+    & > header[data-device="desktop"] {
+        z-index: 99;
+        height: $Size-8;
+        position: fixed;
+        top: 0;
+        @include d-flex--col--cen;
+        transition: all 0.3s ease-in-out;
+        &:has(.Fade) {
+            backdrop-filter: blur($Size-3);
+        }
+        & > .Container {
+            transition: all 0.3s ease-in-out;
+            background-color: primary-color();
+            border-bottom-right-radius: $Size-7;
+            height: 100%;
+            @include d-flex--row--s-bet;
+            transition:
+                all 0.5s ease-in-out,
+                background 1s ease-in-out 0.5s,
+                translate 0.5s ease-in-out 0.2s;
+            &.Mini {
+                translate: 0% -100%;
+                & > .Navigation {
+                    & > a {
+                        & > img {
+                            translate: 0 50%;
+                            transition:
+                                all 1s ease-in 0.5s,
+                                translate 1s ease-out 0.5s;
+                        }
+                    }
+                }
+                & > .Cart {
+                    translate: 0 $Size-8;
+                    background-color: primary-color();
+                    width: $Size-8;
+                    margin-right: 0px;
+                    @include border-bot-radius($Size-7);
+                    justify-content: center;
+                    transition:
+                        all 0.3s ease-in,
+                        translate 0.3s ease-out 0.5s;
+                }
+            }
+            &.Fade {
+                background-color: primary-counter-color(0.2);
+                color: tertiary-color();
+                & > .Navigation {
+                    & > a {
+                        color: secondary-color();
+                        & > img {
+                            height: 250%;
+                            transition: all 0.4s ease-in-out 0.3s;
+                        }
+                    }
+                }
+            }
+            & > .Navigation {
+                height: 100%;
+                flex-grow: 1;
+                gap: $Spacing-3;
+                @include d-flex--row--f-str;
+                & > a {
+                    color: tertiary-color();
+                    transition: all 0.4s ease-out 0.5s;
+                    text-decoration: none;
+                    height: 100%;
+                    &:not(:has(img)) {
+                        @include d-flex--col--cen;
+                        font-weight: bolder;
+                    }
+                    & > img {
+                        aspect-ratio: 1;
+                        object-fit: contain;
+                        width: auto;
+                        height: 180%;
+                        background-color: primary-color();
+                        padding: $Spacing-2;
+                        @include border-bot-radius(50%);
+                        transition:
+                            all 0.5s ease-in 0.5s,
+                            translate 0.3s ease-out 0.2s;
+                        &:hover {
+                            filter: saturate(0%) brightness(200%);
+                        }
+                    }
+                }
+            }
+            & > .Cart {
+                @include d-flex--row--f-end;
+                height: 100%;
+                width: $Size-8;
+                margin-right: $Spacing-4;
+                font-size: 1.5em;
+                color: tertiary-color();
+                transition:
+                    all 0.3s ease-in-out 0.3s,
+                    translate 0.2s ease-out 0.2s;
+            }
+        }
+    }
+   
+}
